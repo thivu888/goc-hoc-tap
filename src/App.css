@@ -1,3 +1,6 @@
+
+@import 'boxicons';
+@import 'bootstrap/dist/css/bootstrap.min.css';
 .App {
   text-align: center;
 }
@@ -12,7 +15,9 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+.hidden-element{
+  display: none;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -37,4 +42,64 @@
   }
 }
 
-@import 'boxicons'
+body{
+  background-color: #f0f2f5;
+
+}
+
+.cursor-pointer{
+  cursor: pointer;
+
+}
+
+.onhover-text-decoration:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+.destroy-upload-baiviet-wraper{
+  position: relative;
+  top: 6px;
+  left: 220px;
+  background-color: #000;
+}
+.destroy-upload-baiviet{
+  position: absolute;
+  background-image: url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/z4jAllbHMQG.png);
+  background-position: 0px -599px;
+  background-size: auto;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  filter: invert(39%);
+}
+.destroy-upload-anh-wraper{
+  position: relative;
+  top: -14px;
+  left: 170px;
+  background-color: #ffffff;
+}
+.destroy-upload-anh{
+  position: absolute;
+  background-image: url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/z4jAllbHMQG.png);
+  background-position: 0px -599px;
+  background-size: auto;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  filter: invert(39%);
+}
+
+.postoverlay {
+  background-color: rgba(0,0,0,.8);
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 99;
+  display: block;
+}

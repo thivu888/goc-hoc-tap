@@ -1,0 +1,62 @@
+.create-status-wrap{
+    
+        background-color:rgba(255,255,255,1);
+        width:80%;
+        margin-top:30px;
+        border-radius:12px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        position: relative;
+        z-index: 99;
+}
+
+.icon-video{
+        background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yN/r/o-E5GQLbsXe.png');
+        background-position:0 -82px;
+        background-size:auto;
+        width:24px;
+        height:24px;
+        background-repeat:no-repeat;
+        display:inline-block;
+}
+.icon-img{
+        background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yN/r/o-E5GQLbsXe.png');
+        background-position:0 -359px;
+        background-size:auto;
+        width:24px;
+        height:24px;
+        background-repeat:no-repeat;
+        display:inline-block;
+}
+
+.icon-state{
+        background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yN/r/o-E5GQLbsXe.png');
+        background-position:0 -257px;
+        background-size:auto;
+        width:24px;
+        height:24px;
+        background-repeat:no-repeat;
+        display:inline-block;
+}
+
+.jqwgj{
+        border-radius: 6px;
+}
+.jqwgj:hover{
+        background-color: #f0f2f5;
+}
+.qwert{
+        background-color:#f0f2f5
+}
+.qwert:hover{
+        background-color:#dcdee0
+
+}
+.rew12-231{
+        height: 24px;
+        width: 24px;
+        background-image: url(https://static.xx.fbcdn.net/rsrc.php/v3/yT/r/fd6xxfx3jyg.png);
+        background-position: 0px -125px;
+        background-size: auto;
+        background-repeat: no-repeat;
+        display: inline-block
+}

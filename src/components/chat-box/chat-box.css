@@ -1,0 +1,33 @@
+.chatboxWraper{
+    position: fixed;
+    height: 400px;
+    width: 340px;
+    background-color: #fff;
+    bottom: 0;
+    right: 100px;
+    z-index: 999;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.chatbox-header{
+    position: sticky;
+}
+.chatbox-footer{
+    background-color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.me{
+    float: right;
+    text-align: end;
+}
+
+.content-chat-box .me div{
+    justify-content: flex-end ;
+}
+.content-chat-box .me img{
+    display: none;
+}

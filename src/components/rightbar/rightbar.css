@@ -1,0 +1,33 @@
+.rightbar{
+    display: flex;
+    flex-grow: 1;
+    position: sticky;
+    height: calc(100vh - 50px);
+    top: 60px;
+    overflow-y: scroll;
+}
+
+.list-user-das::after{
+    content: "";
+    display: block;
+    width: 12px; 
+    height: 12px;
+    border-radius: 50%;
+    background-color: #31a24c;
+    border: 2px solid #ffffff;
+    position: relative;
+    z-index: 1;
+    top: 14px;
+    left: -66px;
+}
+.item-user:hover{
+    background-color: #ebe4e4;
+
+}
+
+.list-user-das-rightbar::after{
+    left: -13px;
+    top: 20px;
+
+
+}

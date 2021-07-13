@@ -1,0 +1,110 @@
+.create-post {
+  border-bottom: 1px solid #e6ecf5;
+  display: block;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 15px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  text-transform: capitalize;
+  width: 100%;
+  color: #515365;
+  position: relative;
+}
+.create-post::before {
+  content: "";
+  height: 90%;
+  left: -20px;
+  position: absolute;
+  top: -5px;
+  width: 3px;
+}
+.create-post > i {
+  font-size: 20px;
+  vertical-align: sub;
+}
+.create-post > a {
+  display: inline-block;
+  float: right;
+  font-size: 11px;
+  font-weight: normal;
+}
+
+.attachments {
+  display: block;
+  text-align: left;
+  background: #fff;
+}
+
+.attachments > ul {
+  list-style: outside none none;
+  margin-bottom: 0;
+  padding-left: 0;
+  line-height: initial;
+}
+
+.attachments li {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: middle;
+  font-size: 16px;
+  line-height: 0;
+}
+.attachments li:first-child{
+margin-left: 0;
+}
+
+.attachments li.preview-btn {
+  float: right;
+}
+.attachments li.preview-btn button {
+  background: #fff none repeat scroll 0 0;
+  border: 1px solid;
+  border-radius: 30px;
+  color: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 12px 10px;
+  transition: all 0.2s linear 0s;
+}
+.attachments li.preview-btn button:hover {
+  color: #fff;
+}
+
+textarea {
+  border: 1px solid #eeeeee;
+  border-radius: 6px 6px 0 0;
+  padding: 10px;
+  width: 100%;
+  border-bottom: 0;
+}
+
+form button {
+  border: medium none;
+  border-radius: 30px;
+  color: #fff;
+  float: right;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 30px;
+transition: all 0.2s linear 0s;
+}
+
+.new-postbox .post-btn {
+  background: #23d2e2 none repeat scroll 0 0;
+  border: medium none;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: 500;
+  margin-top: 11px;
+  padding: 5px;
+  width: 100%;
+  transition: all 0.2s linear 0s;
+}
+
+.attachments .fileContainer [type="file"] {
+  right: 2px;
+  top: -10px;
+  width: 20px;
+  height: 20px;
+}

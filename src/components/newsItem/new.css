@@ -1,0 +1,107 @@
+:root{
+    --liked:invert(39%) sepia(57%) saturate(200%) saturate(200%) saturate(200%) saturate(200%) saturate(200%) saturate(147.75%)hue-rotate(202deg) brightness(97%) contrast(96%);
+}
+
+.item-wraper{
+    background-color: white;
+    margin-top: 30px;
+    border-radius: 12px;
+    width: 80%;
+}
+.icon-public{
+    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/KsI9tXZaAAK.png');
+    background-position:0px -666px;
+    width: 12px;
+    height: 12px;
+    
+
+}
+
+
+.ic{
+    background-size: auto;
+    background-repeat: no-repeat;
+    display: inline-block;
+    filter: invert(39%);
+}
+.icon-like{
+    background-image: url(https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/KsI9tXZaAAK.png);
+    width: 18px;
+    height: 18px;
+    background-position: 0px -191px;
+
+}
+.text-liked{
+    color: #0571ed;
+    font-family: 400;
+}
+.icon-like.liked{
+    background-image: url(https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/KsI9tXZaAAK.png);
+    width: 18px;
+    height: 18px;
+    background-position: 0px -172px;
+    filter: var(--liked);
+}
+.icon-comment{
+    background-image: url(https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/KsI9tXZaAAK.png);
+    background-position: 0px -153px;
+    width: 18px;
+    height: 18px;
+
+}
+.icon-share{
+    background-image: url(https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/KsI9tXZaAAK.png);
+    background-position: 0px -210px;
+    width: 18px;
+    height: 18px;
+   
+}
+.icon-img-cmt{
+    background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yO/r/GlWqb3q6zhG.png);
+    background-position:0px -339px;
+    width:16px;
+    height: 16px;
+}
+.icon-gif-cmt{
+    background-image: url(https://static.xx.fbcdn.net/rsrc.php/v3/yO/r/GlWqb3q6zhG.png);
+    background-position: 0px -424px;
+    width: 16px;
+    height: 16px;
+}
+.icon-ticker-cmt{
+    background-image: url(https://static.xx.fbcdn.net/rsrc.php/v3/yO/r/GlWqb3q6zhG.png);
+    background-position: 0px -458px;
+    width: 16px;
+    height: 16px;
+}
+.icon-feel-cmt{
+    background-image: url(https://static.xx.fbcdn.net/rsrc.php/v3/yO/r/GlWqb3q6zhG.png);
+    background-position: 0px -407px;
+    width: 16px;
+    height: 16px;
+}
+.qwewqe-12{
+    border-radius: 8px;
+    cursor: pointer;
+    height: 90%;
+}
+
+.qwewqe-12:hover{
+    background-color: #ccccce;
+}
+.dot-afas{
+    height: 32px;
+}
+.dot-afas::after{
+    content: "";
+    display: block;
+    width: 12px; 
+    height: 12px;
+    border-radius: 50%;
+    background-color: #31a24c;
+    border: 2px solid #ffffff;
+    position: relative;
+    top: -12px;
+    left: 17px;
+    z-index: 1;
+}

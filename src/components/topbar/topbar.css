@@ -1,0 +1,187 @@
+.topbarContainer {
+    height: 56px;
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    box-shadow: 0 2px rgba(0,0,0,0.1);
+    align-items: center;
+  }
+  
+  .topbarLeft {
+    display: flex;
+    height: 100%;
+    align-items: center;
+  }
+  .p361ku9c{
+      fill:#ffffff;
+  }
+ .searchInput-wraper{
+    background-color: #f0f2f5;
+    border-radius: 30px;
+    margin: 10px 0 7px 12px;
+ }
+  .searchInput {
+    border: none;
+    width: 200px;
+    height: 40px;
+    background-color: transparent;
+    margin-left: 4px;
+    padding: 4px;
+  }
+  
+ 
+  
+
+  
+  .searchIcon {
+    font-size: 20px !important;
+    margin-left: 10px;
+  }
+  
+  
+  .searchInput:focus {
+    outline: none;
+  }
+  
+  li{
+      list-style: none;
+  }
+
+  .topbarCenter{
+        height: 100%;
+        display: flex;
+        flex: 5;
+        justify-content: space-around;
+        align-items: center;
+        align-content: center;
+  }
+
+
+  .topbarRight {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    color: white;
+    margin-left: 10px;
+    float: right;
+    justify-content: space-between;
+  }
+  
+  .topbarLink {
+    margin-right: 10px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .topbarIcons {
+    display: flex;
+  }
+  
+  .topbarIconItem {
+    margin-right: 15px;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .topbarIconBadge {
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+    color: white;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+  
+  .topbarImg {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  .hu5pjgll{
+    background-image:url('https://static.xx.fbcdn.net/rsrc.php/v3/yo/r/5muBjr6R-Tf.png');
+    background-position:0 -557px;
+    background-size:auto;
+    width:20px;
+    height:20px;
+    background-repeat:no-repeat;
+    display:inline-block;
+    margin-top: 9px;
+  }
+  .a8c37x1j{
+    margin-top: 9px;
+
+  }
+  .lzf7d6o1{
+    background-image: url(https://static.xx.fbcdn.net/rsrc.php/v3/yo/r/5muBjr6R-Tf.png);
+    background-position: 0 -725px;
+    background-size: auto;
+    width: 20px;
+    height: 20px;
+    margin-top: 9px;
+    background-repeat: no-repeat;
+    display: inline-block;
+  }
+  .bg-item-nav{
+      background-color: #e4e6eb;
+  }
+  .topbarRight-hover:hover{
+      background-color: rgba(0,0,0,0.2)
+  }
+  .topbarCenter-item{
+      height: 100%;
+      width: 100%;
+      border-radius: 6px;
+      margin: 12px 0 12px 0;
+      cursor: pointer;
+      margin-top: 28px;
+  }
+  
+  .topbarCenter-item a{
+      display: inline-block;
+      margin-top: 10px;
+  }
+  .topbarCenter-item:hover{
+        background-color: #e4e6eb;
+  }
+  @media screen and (max-width: 768px)  {
+    .topbarLink{
+      display: none;
+    }
+    .logo{
+        font-size: 18px;
+        margin: 0;
+    }
+    .topbarLeft{
+        flex: none;
+        padding: 5px;
+    }
+  }
+.option-down div:hover{
+  background-color: #f0f2f5;
+  border-radius: 6px;
+}
+
+.fasjg{
+  background-color: rgba(0,0,0,0.1)
+}
+/* .option-down::before{
+  content: "";
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #fff;
+
+  top: -11px;
+    right: 5px;
+} */

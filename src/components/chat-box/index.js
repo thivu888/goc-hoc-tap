@@ -43,7 +43,6 @@ const Index = ({setChatBoxShow,currentUser,userConnect,socket}) => {
 		setContentMess('')
 		socket.emit('send-notify-seen-server',{id:currentUser._id,room:(currentUser.user_id+userConnect.user_id)})
 	}
-	console.log(mess)
     return (
        <div className='chatboxWraper' style={{boxShadow:'0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 19%)'}}>
 			<div className='d-flex mt-2 ml-2 mr-2 p-1 align-items-center chatbox-header' style={{boxShadow:'0 2px rgba(0,0,0,0.1)'}}>

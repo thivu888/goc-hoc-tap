@@ -4,6 +4,7 @@ import axios from 'axios';
 import {Spinner} from 'react-spinners-css';
 import { useRecoilValue } from 'recoil';
 import UserData from '../../configData/UserData';
+import CloseIcon from '@material-ui/icons/Close';
 
 const Index = ({setoverlay}) => {
     const user=useRecoilValue(UserData)
@@ -62,16 +63,19 @@ const Index = ({setoverlay}) => {
                         <input className='ml-2' style={{float:'left',color:'#65676b',fontSize:'18px',height:'100%',outline:'none',border:'none',width:'100%',backgroundColor:'transparent'}} placeholder={`${user.user&&user.user.username},bạn đang nghĩ gì thế?`} value={contentPost} onFocus={()=>setoverlay(true)} onInput={(e)=>setContentPost(e.target.value)}/>
                     </div>
                 </div>
-               {imgpost||videopost?( <div style={{borderTop:'1px solid #e4e6eb'}} className='mt-1 mb-1 cursor-pointer'>
-                  {imgpost?  <div>
+               {imgpost||videopost?(<> <div style={{borderTop:'1px solid #e4e6eb'}} className='mt-1 mb-1 cursor-pointer'>
+                  {imgpost?  <div style={{position:'relative'}}>
                         <img style={{objectFit:'cover',width:'100%',display:'inline-block'}} src={URL.createObjectURL(imgpost)}/>
+                        <div onClick={()=>setImgPost(null)} style={{position:'absolute',top:'10px',right:'10px'}}><CloseIcon/></div>
                     </div>:null}
-                    {videopost?<div style={{borderTop:'1px solid #e4e6eb'}}>
+                    {videopost?<div style={{borderTop:'1px solid #e4e6eb',position:'relative'}}>
                         <video style={{width:'100%'}} >
                             <source src={URL.createObjectURL(videopost)} type="video/mp4"/>
                         </video>
+                        <div onClick={()=>setVideoPost(null)} style={{position:'absolute',top:'10px',right:'10px'}}><CloseIcon/></div>
                     </div>:null}
-                </div>):null}
+                </div>
+                </>):null}
                 <div className='mt-3 d-flex align-items-center' style={{borderTop:'1px solid #e4e6eb',width:'100%',height:'40px',margin:'auto'}}>
                     <div className='d-flex justify-content-around jqwgj pt-2 pb-2 mt-2' style={{flex:'1',cursor:'pointer'}}>
                         <i className='icon-video'></i>

@@ -39,9 +39,14 @@ const CommentItem = ({imgsize,socket,comment,post}) => {
                             <span className='onhover-text-decoration'  style={{color:'#050505',fontWeight:'500',fontSize:'14px',textAlign:'start'}}>{commentor&&commentor.username}</span>
                             <div style={{textAlign:'start',wordBreak:'break-word',wordWrap:'break-word'}}>{comment.content}</div> 
                     </div>
-                    {/* {<div className='ml-4 mt-1' style={{maxWidth:'200px',maxHeight:'300px',borderRadius:'12px'}}>
-                        <img style={{width:'100%',height:'100%',objectFit:'contain',borderRadius:'12px',display:'inline-block'}} src='https://scontent.fhph1-2.fna.fbcdn.net/v/t1.6435-0/p160x160/205588165_4009586245824898_306708298371217003_n.jpg?_nc_cat=105&ccb=1-3&_nc_sid=dbeb18&_nc_ohc=S6gfV_ncZGIAX8X0aBu&tn=zIQVpULslmKPxnQ9&_nc_ht=scontent.fhph1-2.fna&tp=6&oh=6e5241857f1f79adc5d27c95d74ead85&oe=60E43879'></img>
-                    </div>} */}
+                    {comment.filecomment&&comment.filecomment.type=='image'&&<div className='ml-4 mt-1' style={{maxWidth:'200px',maxHeight:'300px',borderRadius:'12px'}}>
+                        <img style={{width:'100%',height:'100%',objectFit:'contain',borderRadius:'12px',display:'inline-block'}} src={comment.filecomment.url}></img>
+                    </div>}
+
+                    {comment.filecomment&&comment.filecomment.type=='video'&&<div className='ml-4 mt-1' style={{maxWidth:'300px',maxHeight:'300px',borderRadius:'12px'}}>
+                    <video controls style={{width:"300px",borderRadius:'8px'}}><source type="video/mp4" src={comment.filecomment.url}/></video>
+                    </div>}
+
                     <div className='d-flex ml-4'>
                         <span className='ml-2 mr-2 onhover-text-decoration' style={{fontWeight:'bold',color:'#65676b',fontSize:'12px'}} >Thích</span>
                         <span className='mr-2 onhover-text-decoration' style={{fontWeight:'bold',color:'#65676b',fontSize:'12px'}} onClick={()=>setinputcmt(true)}>Trả lời</span>
@@ -50,7 +55,7 @@ const CommentItem = ({imgsize,socket,comment,post}) => {
                     <div className='ml-4' >
                     {comment.repcomment.length>0? comment.repcomment.map(commentrep=><CommentItemRep commentrep={commentrep} imgsize={24} setinputcmt={setinputcmt}/>) :null}
                         <div className={!inputcmt?'hidden-element':''}>
-                        <InputComment socket={socket} post={post} rep={true} currentUser={currentUser} comment_Id={comment.comment_Id} imgsize={24}/>
+                        <InputComment socket={socket} post={post} commentrep={true} currentUser={currentUser} comment_Id={comment.comment_Id} imgsize={24}/>
                         </div>
                     </div>
                 </div>

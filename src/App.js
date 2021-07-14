@@ -12,6 +12,8 @@ import UserData from './configData/UserData'
 import Profile from './pages/profile'
 import Watch from './components/watch';
 import Topbar from './components/topbar'
+import ChatBox from './components/chat-box'
+import ForgotPassword from './components/forgotPass'
 const serverIO='http://localhost:5000'
 
 function App() {
@@ -24,6 +26,7 @@ function App() {
   const {getPosts}=PostAPI()
   useEffect(() => {
     socket.current=io(serverIO)
+    if(user.user)socket.current.emit('joinpages',user.user._id)
     loadUser()
     getPosts()
 
@@ -37,17 +40,18 @@ function App() {
         <div className={overlay?'postoverlay':''}onClick={()=>setoverlay(false)}></div>
 
     <Router>
-    <Topbar setUserConnect={setUserConnect} setChatBoxShow={setChatBoxShow} />
+    {user.user?<Topbar socket={socket.current} setUserConnect={setUserConnect} setChatBoxShow={setChatBoxShow} />:null}
 
           <Switch>
             
             <Route path='/login' ><Login/></Route>
+            <Route path='/forgot' ><ForgotPassword/></Route>
             <Route path='/register' ><Register/></Route>
             <Route path='/profile/:id' ><Profile setoverlay={setoverlay} socket={socket.current}/></Route>
             <Route path='/'>{user.user?<Home socket={socket.current} setUserConnect={setUserConnect} userConnect={userConnect} chatBoxShow={chatBoxShow}  setChatBoxShow={setChatBoxShow}  setoverlay={setoverlay}/>:<Redirect to='/login'/>}</Route>
           </Switch>
        </Router>
-       
+       {chatBoxShow?<ChatBox currentUser={user.user} socket={socket.current} setChatBoxShow={setChatBoxShow} userConnect={userConnect}/>:null}   
     </div>
   );
 }

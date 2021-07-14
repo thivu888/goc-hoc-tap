@@ -57,6 +57,12 @@
         justify-content: space-around;
         align-items: center;
         align-content: center;
+        margin: 0;
+  }
+
+  .topbarCenter a{
+    height: 100%;
+
   }
 
 
@@ -68,6 +74,7 @@
     margin-left: 10px;
     float: right;
     justify-content: space-between;
+    margin: 4px 0 4px 0;
   }
   
   .topbarLink {
@@ -139,20 +146,15 @@
       background-color: rgba(0,0,0,0.2)
   }
   .topbarCenter-item{
-      height: 100%;
-      width: 100%;
       border-radius: 6px;
-      margin: 12px 0 12px 0;
       cursor: pointer;
-      margin-top: 28px;
+      margin-top: 12px;
   }
   
-  .topbarCenter-item a{
-      display: inline-block;
-      margin-top: 10px;
-  }
-  .topbarCenter-item:hover{
+  
+  .topbarCenter a:hover{
         background-color: #e4e6eb;
+        border-radius: 12px;
   }
   @media screen and (max-width: 768px)  {
     .topbarLink{

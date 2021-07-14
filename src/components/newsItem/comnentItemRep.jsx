@@ -31,6 +31,13 @@ const CommentItemRep = ({imgsize,setinputcmt,commentrep}) => {
                             <span className='onhover-text-decoration'  style={{color:'#050505',fontWeight:'500',fontSize:'14px',textAlign:'start'}}>{commentor&&commentor.username}</span>
                             <div style={{textAlign:'start',wordBreak:'break-word',wordWrap:'break-word'}}>{commentrep.content}</div> 
                     </div>
+                    {commentrep.filecomment&&commentrep.filecomment.type=='image'&&<div className='ml-4 mt-1' style={{maxWidth:'200px',maxHeight:'300px',borderRadius:'12px'}}>
+                        <img style={{width:'100%',height:'100%',objectFit:'contain',borderRadius:'12px',display:'inline-block'}} src={commentrep.filecomment.url}></img>
+                    </div>}
+
+                    {commentrep.filecomment&&commentrep.filecomment.type=='video'&&<div className='ml-4 mt-1' style={{maxWidth:'300px',maxHeight:'300px',borderRadius:'12px'}}>
+                    <video controls style={{width:"300px",borderRadius:'8px'}}><source type="video/mp4" src={commentrep.filecomment.url}/></video>
+                    </div>}
                     <div className='d-flex ml-4'>
                         <span className='ml-2 mr-2 onhover-text-decoration' style={{fontWeight:'bold',color:'#65676b',fontSize:'12px'}} >Thích</span>
                         <span className='mr-2 onhover-text-decoration' style={{fontWeight:'bold',color:'#65676b',fontSize:'12px'}} onClick={()=>setinputcmt(true)}>Trả lời</span>

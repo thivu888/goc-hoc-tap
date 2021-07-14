@@ -61,7 +61,6 @@ const UserAPI = () => {
     const getUserById=async(id)=>{
         try {
         const user=await axios.get(`/api/user/getuserbyid/${id}`);
-        console.log(user.data.user)
            if(user.data.success) return user.data.user
         } catch (error) {
             console.log(error)

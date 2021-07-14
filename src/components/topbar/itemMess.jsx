@@ -19,7 +19,7 @@ const ItemMess = ({item,setChatBoxShow,setUserConnect,userCurrent}) => {
             <img style={{width:'60px',height:'60px',float:'left',borderRadius:'50%'}} src={user&&user.profilePicture} />
             <div className='d-flex flex-column align-items-start justify-content-center '>
                 <span style={{color:'#050505',marginLeft:'8px',fontWeight:'600'}}>{user&&user.username}</span>
-                <span className='ml-2' style={{fontSize:'0.9375rem',lineHeight:'1.333',color:'rgb(0.5,0.5,0.5)'}}>{item.content[item.content.length-1].content}</span>
+                <span className='ml-2' style={{fontSize:'0.9375rem',lineHeight:'1.333',color:'rgb(0.5,0.5,0.5)'}}>{item&&item.content&&item.content&&item.content.length>0?item.content[item.content.length-1].content:''}</span>
             </div>
             </div>
       </li>

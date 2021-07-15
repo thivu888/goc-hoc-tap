@@ -5,14 +5,14 @@ import CommentItem from './commentItem';
 import './new.css'
 import { useState ,useEffect} from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import { useRecoilValue } from 'recoil';
 import UserData from '../../configData/UserData';
 import io from 'socket.io-client'
 import { Viewport } from 'react-is-in-viewport';
 import PostAPI from '../../API/PostAPI';
 const serverIO='http://localhost:5000'
-const News = ({item}) => {
+const News = ({item,media,view}) => {
     const socket=useRef();
     const [userPost,setUserPost]=useState({})
     const [isLiked, setIsLiked] = useState(false);
@@ -23,6 +23,7 @@ const News = ({item}) => {
     const [comments,setcomments]=useState(item.comments)
     const{deletePost}=PostAPI()
     const videoref=useRef()
+    const history=useHistory()
     const getUser=async()=>{
         await axios.get(`/api/user/getuserbyid/${item.userId}`).then(res=>
          {
@@ -79,15 +80,15 @@ const News = ({item}) => {
     return (
        
         
-        <div className='container item-wraper' style={{border:'1px solid #e4e6eb'}} onMouseOver={joinRoomPost}>
+        <div className='container item-wraper' style={{border:'1px solid #e4e6eb' }} onMouseOver={joinRoomPost}>
        {/* <Viewport
             onEnter={()=>{console.log('inview');joinRoomPost();if(videoref.current)videoref.current.play()}}
             onLeave={()=>{console.log('outview');joinRoomPost();if(videoref.current)videoref.current.pause()}}> */}
-            <div className='item'>
-                <div className='item-header d-flex pt-3'>
-                <Link to={`profile/${userPost._id}`} className='d-inline-block'><img style={{flex:'0',cursor:'pointer',width:'40px',height:'40px',borderRadius:'50%',border:'1px solid rgba(96,98,102,0.3)'}} src={userPost.profilePicture}/></Link>
-                    <div className='d-flex flex-column align-items-start' style={{flex:'10'}}>
-                    <Link to={`profile/${userPost._id}`} className='d-inline-block'> <strong><span className='onhover-text-decoration' style={{fontWeight:'600',color:'#050505',cursor:'pointer'}}>{userPost.username}</span></strong></Link>
+            <div className='item' >
+                <div className='item-header d-flex pt-3 mb-2'>
+                <Link to={`profile/${userPost._id}`} className='d-inline-block'><img style={{flex:'0',cursor:'pointer',width:'48px',height:'48px',borderRadius:'50%',border:'1px solid rgba(96,98,102,0.3)'}} src={userPost.profilePicture}/></Link>
+                    <div className='d-flex flex-column align-items-start ml-2' style={{flex:'10'}}>
+                    <Link to={`profile/${userPost._id}`} className='d-inline-block'> <strong><span className='onhover-text-decoration' style={{fontWeight:'600',color:'#050505',cursor:'pointer',fontSize:'18px'}}>{userPost.username}</span></strong></Link>
                         <div>
                             <span style={{cursor:'pointer',userSelect:'none',fontWeight:'400',color:'#65676b',fontSize:' .8125rem'}}>{format(item&&item.createdAt)}</span>
                             <span style={{color:'#65676b'}} aria-hidden="true"> · </span>
@@ -100,18 +101,17 @@ const News = ({item}) => {
                     {btndelete? <ul style={{position:'relative'}}>
                         <li style={{cursor:'pointer',position:'absolute',top:'44px0',color:'red',backgroundColor:'#f2f2f2',width:'50px',height:'25px',borderRadius:'4px',display:'block'}} onClick={()=>deletePost({img_public_id:post.img_public_id,video_public_id:post.video_public_id,id:post._id})}>Xóa</li>
                     </ul>:null}
-                   
                 </div>
                 <div className='content' style={{borderBottom:'1px solid #e4e6eb',textAlign:'start',color: '#050505',wordBreak:'break-word',wordWrap:'break-word',fontSize:'0.9375rem'}}>
                    {item&&item.content}
                 </div>
                 
-                {item&&item.img?<div className='content-img mt-' style={{width:'100%'}}>
-                    <img style={{cursor:'pointer',objectFit:'cover',width:'100%',display:'inline-block',height:'100%'}}  src={item&&item.img} alt="" />
+                {item&&item.img&&media?<div className='content-img mt-' style={{width:'100%'}}>
+                    <img style={{cursor:'pointer',objectFit:'cover',width:'100%',display:'inline-block',height:'100%'}}  src={item&&item.img} alt="" onClick={()=>history.push(`/posts/views/${item._id}`)} />
                 </div>:null}
-                {item&&item.video?
+                {item&&item.video&&media?
                                 <div style={{borderTop:'1px solid #e4e6eb',cursor:'pointer'}}>
-                                        <video ref={videoref} style={{width:'100%'}} controls onpl>
+                                        <video ref={videoref} style={{width:'100%'}} controls autoPlay={false}  onClick={()=>{videoref.current.muted=true;history.push(`/posts/video/${item._id}`)}}>
                                             <source src={item&&item.video} type="video/mp4"/>
                                         </video>
                                 </div>
@@ -151,8 +151,8 @@ const News = ({item}) => {
                         <span style={{lineHeight:'100%'}}>Chia sẻ</span>
                     </div>
                 </div>
-                <div className={!displaycmt&&'hidden-element'}>
-                    {comments.length&&comments.map(comment=><CommentItem socket={socket.current} post={post}   comment={comment}/>)}
+                <div className={!displaycmt&&'hidden-element'} >
+                    {comments.length&&comments.map(comment=><CommentItem socket={socket.current} post={post} setdisplaycmt={setdisplaycmt}   comment={comment}/>)}
                    
                 </div>
                 

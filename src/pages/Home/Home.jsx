@@ -11,7 +11,7 @@ import {listMessUser,listUser} from '../../configData/UserData'
 import UserData from '../../configData/UserData';
 const serverIO='http://localhost:5000'
 
-const Home = ({setoverlay,setUserConnect,setChatBoxShow,chatBoxShow,userConnect,socket}) => {
+const Home = ({setoverlay,setUserConnect,setChatBoxShow,chatBoxShow,userConnect,socket,setShowAlertCreated,setShowAlert}) => {
     // const audioRef=useRef()
     // const [listmessUser,setlistMessUser]=useRecoilState(listMessUser)
     // const [listuser,setListUser]=useRecoilState(listUser)
@@ -58,7 +58,7 @@ const Home = ({setoverlay,setUserConnect,setChatBoxShow,chatBoxShow,userConnect,
             <div className="container-fluid">
                  <div className='row'>
                     <Sidebar/>
-                    <Feed setoverlay={setoverlay} socket={socket}/>
+                    <Feed setShowAlertCreated={setShowAlertCreated} setShowAlert={setShowAlert} setoverlay={setoverlay} socket={socket}/>
                     <Rightbar setChatBoxShow={setChatBoxShow}  setUserConnect={setUserConnect} socket={socket}/>
                 </div>
             </div>

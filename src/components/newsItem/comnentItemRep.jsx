@@ -19,7 +19,7 @@ const CommentItemRep = ({imgsize,setinputcmt,commentrep}) => {
         getUserById(commentrep.userId).then(res=>{
             setCommentor(res)
         })
-    },[commentrep.userId])
+    },[commentrep&&commentrep.userId])
     return (
         <div className='d-flex align-items-center mt-3 mb-3' style={{cursor:'pointer',minWidth:'300px'}}>
             <div className='d-flex' onMouseOver={display_dot_dot_dot} onMouseLeave={hidden_dot_dot_dot}>

@@ -7,7 +7,7 @@ import UserAPI from '../../API/UserAPI';
 import CreateStatus from '../../components/createStatus'
 import NewItem from '../../components/newsItem/news';
 import UserData from '../../configData/UserData';
-const Index = ({setoverlay,socket}) => {
+const Index = ({setoverlay,socket,setShowAlertCreated,setShowAlert}) => {
     const[avatarPicture,setAvatarPicture]=useState('')
     const[coverPicture,setCoverPicture]=useState('')
     const[data,setData]=useState({
@@ -35,14 +35,14 @@ const Index = ({setoverlay,socket}) => {
     const onhandleChangeImgAvatar=(e)=>{
         e.preventDefault();
         const file=e.target.files[0];
-        setAvatarPicture(URL.createObjectURL(file))
+        if(file)setAvatarPicture(URL.createObjectURL(file))
         setData({...data,avatar:file})
     }
 
     const onhandleChangeImgCover=(e)=>{
         e.preventDefault();
         const file=e.target.files[0];
-        setCoverPicture(URL.createObjectURL(file))
+        if(file)setCoverPicture(URL.createObjectURL(file))
         setData({...data,cover:file})
 
     }

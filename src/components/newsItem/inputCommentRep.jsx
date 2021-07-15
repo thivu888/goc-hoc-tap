@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios'
 import CloseIcon from '@material-ui/icons/Close';
 
-import filecomment from '../../configData/fileComment';
 import filecommentRep from '../../configData/fileCommentRep';
 import { useRecoilState, useRecoilValue } from 'recoil';
-const InputComment = ({imgsize,currentUser,post,socket,setdisplaycmt,rep,comment_Id}) => {
+
+const InputCommentRep = ({imgsize,currentUser,post,socket,comment_Id}) => {
     const [content, setContent] = useState('');
-    const [file,setFIle]=useRecoilState(filecomment)
     const [fileRep,setFIleRep]=useRecoilState(filecommentRep)
     const onChangeInput=(e)=>{
         let name=e.target.name;
@@ -17,10 +16,11 @@ const InputComment = ({imgsize,currentUser,post,socket,setdisplaycmt,rep,comment
     const onInputFile=(e)=>{
         const f=e.target.files[0]
         if(f){
-            setFIle(f) 
-        }else{
-            setFIle(null)
-        }
+            setFIleRep(f)
+            }else{
+                setFIleRep(null)
+            }
+        
     }
     const submitHandle=async(e)=>{
         const dataform=new FormData()
@@ -34,28 +34,18 @@ const InputComment = ({imgsize,currentUser,post,socket,setdisplaycmt,rep,comment
                createAt:new Date(Date.now()),
                comment_Id:Math.random().toString(36).substring(2)+Math.random().toString(36).substring(2)
            }
-        //    if(rep&&comment_Id){
-        //        alert('vao day')
-        //         if(file){
-        //             dataform.append('file',file)
-        //             const res=  await axios.post('/api/post/filecomment', dataform, { headers: {'content-type': 'multipart/form-data'}})
-        //             data.filecomment={...res.data}
-        //         }
-        //     socket.emit('sendComment-rep',{...data,comment_Id:comment_Id})
-
-        //    }else{
-            if(file){
-                dataform.append('file',file)
+            if(fileRep){
+                dataform.append('file',fileRep)
                 const res=  await axios.post('/api/post/filecomment', dataform, { headers: {'content-type': 'multipart/form-data'}})
                 data.filecomment={...res.data}
-                }
-           socket.emit('sendComment',data)
-           setdisplaycmt(true)
+            }
+            socket.emit('sendComment-rep',{...data,comment_Id:comment_Id})
            setContent('')
-           setFIle(null)
-           }
+           setFIleRep(null)
+        }
           
-       }
+       
+    }
     
     return (<>
     <div className='d-flex align-items-center mt-3 mb-3' style={{cursor:'pointer'}}>
@@ -84,12 +74,12 @@ const InputComment = ({imgsize,currentUser,post,socket,setdisplaycmt,rep,comment
             </div>
         </div>
         <div className='mb-2'>
-             {file&&file.type.includes('image')&&<><img src={URL.createObjectURL(file)} style={{width:"120px",objectFit:'contain',borderRadius:'8px'}}></img><div onClick={()=>setFIle(null)} className='cursor-pointer' style={{position:'relative',top:'-120px',left:'80px'}}>< CloseIcon/></div></>}
-             {file&&file.type.includes('video')&&<><video controls style={{width:"200px",borderRadius:'8px'}}><source type="video/mp4" src={URL.createObjectURL(file)}/></video><div onClick={()=>setFIle(null)} className='cursor-pointer' style={{position:'relative',top:'-100px',left:'120px'}}>< CloseIcon/></div></>}
+             {fileRep&&fileRep.type.includes('image')&&<><img src={URL.createObjectURL(fileRep)} style={{width:"120px",objectFit:'contain',borderRadius:'8px'}}></img><div onClick={()=>setFIleRep(null)} className='cursor-pointer' style={{position:'relative',top:'-120px',left:'80px'}}>< CloseIcon/></div></>}
+             {fileRep&&fileRep.type.includes('video')&&<><video controls style={{width:"200px",borderRadius:'8px'}}><source type="video/mp4" src={URL.createObjectURL(fileRep)}/></video><div onClick={()=>setFIleRep(null)} className='cursor-pointer' style={{position:'relative',top:'-100px',left:'120px'}}>< CloseIcon/></div></>}
         </div>
      
         </>
     );
-}
 
-export default InputComment;
+    }
+export default InputCommentRep;

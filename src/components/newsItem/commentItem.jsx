@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import CommentItemRep from './comnentItemRep';
-import InputComment from './inputComment';
+import InputItemRep from './inputCommentRep';
+import CommentItemRep from './comnentItemRep'
 import { format } from 'timeago.js';
 import { useRecoilValue } from 'recoil';
 import UserData from '../../configData/UserData'
 import UserAPI from '../../API/UserAPI';
-const CommentItem = ({imgsize,socket,comment,post}) => {
+const CommentItem = ({imgsize,socket,comment,post,setdisplaycmt}) => {
     const {getUserById}=UserAPI()
     const [dot,setDot] =useState(false)
     const [inputcmt,setinputcmt] =useState(false)
@@ -55,7 +55,7 @@ const CommentItem = ({imgsize,socket,comment,post}) => {
                     <div className='ml-4' >
                     {comment.repcomment.length>0? comment.repcomment.map(commentrep=><CommentItemRep commentrep={commentrep} imgsize={24} setinputcmt={setinputcmt}/>) :null}
                         <div className={!inputcmt?'hidden-element':''}>
-                        <InputComment socket={socket} post={post} commentrep={true} currentUser={currentUser} comment_Id={comment.comment_Id} imgsize={24}/>
+                        <InputItemRep socket={socket} post={post}  currentUser={currentUser}  comment_Id={comment.comment_Id} imgsize={24}/>
                         </div>
                     </div>
                 </div>

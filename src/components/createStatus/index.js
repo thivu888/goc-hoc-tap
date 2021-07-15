@@ -2,11 +2,13 @@ import React,{useState} from 'react';
 import './createstatus.css'
 import axios from 'axios';
 import {Spinner} from 'react-spinners-css';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import UserData from '../../configData/UserData';
 import CloseIcon from '@material-ui/icons/Close';
+import PostData from '../../configData/PostData';
 
-const Index = ({setoverlay}) => {
+const Index = ({setoverlay,setShowAlertCreated,setShowAlert}) => {
+    const [posts,setposts]=useRecoilState(PostData)
     const user=useRecoilValue(UserData)
     const [imgpost,setImgPost]=useState(null)
     const [videopost,setVideoPost]=useState(null)
@@ -43,13 +45,16 @@ const Index = ({setoverlay}) => {
             data.append('content',contentPost)
         }
         setoverlay(false)
-        setLoading(true)
-        await axios.post('/api/post',data,{
+        setShowAlert(true)
+        setVideoPost(null);
+        setImgPost(null);
+        setContentPost('')
+        const res=await axios.post('/api/post',data,{
             headers: {'content-type': 'multipart/form-data'}
         })
-        setLoading(false)
-        window.location.reload();
-        
+        setShowAlert(false)
+        setShowAlertCreated(true)
+        setposts([res.data.newpost,...posts])
     }
     return (<>
         <div className='container create-status-wrap'>

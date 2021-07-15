@@ -7,7 +7,7 @@ import NewsItem from '../newsItem/news';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import PostData from '../../configData/PostData';
 import UserData from '../../configData/UserData';
-const Feed = ({setoverlay,socket}) => {
+const Feed = ({setoverlay,socket,setShowAlertCreated,setShowAlert}) => {
     const [post,setPosts]=useRecoilState(PostData)
     const user=useRecoilValue(UserData)
   
@@ -21,8 +21,8 @@ const Feed = ({setoverlay,socket}) => {
             <div className='story-container'>
                <Story/>
             </div>
-            <CreateStatus setoverlay={setoverlay}/>
-            {post.map(item=><NewsItem key={item._id} item={item} socket={socket}/>)}
+            <CreateStatus setoverlay={setoverlay} setShowAlertCreated={setShowAlertCreated} setShowAlert={setShowAlert}/>
+            {post.map(item=><NewsItem key={item._id} item={item} media={true} socket={socket}/>)}
         </div>
 
     );

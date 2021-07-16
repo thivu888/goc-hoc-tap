@@ -22,7 +22,7 @@ const ItemMess = ({item,setChatBoxShow,setUserConnect,userCurrent}) => {
                 <span className='ml-2' style={{fontSize:'0.9375rem',lineHeight:'1.333',color:'rgb(0.5,0.5,0.5)'}}>{item&&item.content&&item.content&&item.content.length>0?item.content[item.content.length-1].content:''}</span>
             </div>
             </div>
-      </li>
+        </li>
     );
 }
 

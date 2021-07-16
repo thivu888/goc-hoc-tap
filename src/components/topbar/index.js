@@ -7,14 +7,20 @@ import ItemMess from "./itemMess";
 import UserState,{ listMessUser,listUser } from "../../configData/UserData";
 import { useRecoilState, useRecoilValue } from 'recoil';
 import audioNotifyMess from '../../assets/audio/lvSDckxyoU5.ogg'
+import NotifyData from "../../configData/NotifyData";
+import ItemNotify from "./ItemNotify";
 const serverIO='http://localhost:5000'
 export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
   const {logout,getListMess}=UserAPI()
   const userstate=useRecoilValue(UserState)
-    const listmess=useRecoilValue(listMessUser)
     const {user}={...userstate}
     const [countMess,setCountMess]=useState(0);
-
+    const [countNotify,setCountNotify]=useState(0);
+  // const socket=useRef()
+  const audioRef=useRef()
+  const [listmess,setlistMessUser]=useRecoilState(listMessUser)
+  const [listuser,setListUser]=useRecoilState(listUser)
+  const [notifydata,setNotifyData]=useRecoilState(NotifyData)
     useEffect(()=>{
       let count=0;
       listmess.forEach(item=>{
@@ -25,8 +31,19 @@ export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
         })
         setCountMess(count)
     },[listmess.length,listmess,user._id])
+    useEffect(()=>{
+      let count=0;
+      notifydata.forEach(item=>{
+            if(!item.isRead)
+            {
+                count++;
+            }
+        })
+        setCountNotify(count)
+    },[notifydata.length,notifydata,user._id])
   const [optiondown,setOptionDown]=useState(false)
   const [optiondownmess,setOptionDownmess]=useState(false)
+  const [optiondownnotify,setOptionDownnotify]=useState(false)
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [active,setActive]=useState({
     home:false,
@@ -49,27 +66,19 @@ export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
     getListMess(user.user_id)
 
   },[])
-  // const socket=useRef()
-  const audioRef=useRef()
-  const [listmessUser,setlistMessUser]=useRecoilState(listMessUser)
-  const [listuser,setListUser]=useRecoilState(listUser)
+
   useEffect(()=>{
     // socket.current=io(serverIO)
-
     socket.emit('joinpages',user._id)
     socket.emit('getlistuser',user._id);
     socket.emit('getlistMess',user._id);
-      socket.on('ListUser',list=>{
+    socket.on('ListUser',list=>{
           const newlist=list.filter((item)=>{
               return item._id!=user._id
           })
           setListUser(newlist)
       });
-    
-     
-      
     },[])
-
   useEffect(()=>{
     socket.on('sever-send-list-mess',data=>{
        setlistMessUser([...data])
@@ -81,7 +90,11 @@ export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
        }
    })
 
+   socket.on('server-send-seen-notify',data=>{
+    setNotifyData([...data])
+   })
   socket.on('server-send-notify-comment',data=>{
+    setNotifyData([...data])
         audioRef.current.play()
   },[]);
 
@@ -90,6 +103,7 @@ export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
         setlistMessUser([...data])
     })
    },[])
+  
   return (
     <div className="topbarContainer container-fluid">
       <div className="topbarLeft">
@@ -158,8 +172,16 @@ export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
             </ul>
           </div>:null}
         </div>
-        <div className='topbarRight-hover bg-item-nav' style={{width:'40px',height:'40px',borderRadius:'20px',cursor:'pointer'}}>
+        <div className='topbarRight-hover bg-item-nav' style={{width:'40px',height:'40px',borderRadius:'20px',cursor:'pointer'}} onClick={()=>setOptionDownnotify(!optiondownnotify)}>
+            {countNotify>0?<div style={{top:'0',textAlign:'center',position:"absolute",width:'20px',height:'20px',borderRadius:'50%',backgroundColor:'red'}}>
+              <span style={{color:'white',display:'inline-block',position:"relative", top:'-2px'}}>{countNotify}</span>
+            </div> :null  }
           <svg viewBox="0 0 28 28" alt="" class="a8c37x1j ms05siws hwsy1cff b7h9ocf4 fzdkajry" height="20" width="20"><path d="M7.847 23.488C9.207 23.488 11.443 23.363 14.467 22.806 13.944 24.228 12.581 25.247 10.98 25.247 9.649 25.247 8.483 24.542 7.825 23.488L7.847 23.488ZM24.923 15.73C25.17 17.002 24.278 18.127 22.27 19.076 21.17 19.595 18.724 20.583 14.684 21.369 11.568 21.974 9.285 22.113 7.848 22.113 7.421 22.113 7.068 22.101 6.79 22.085 4.574 21.958 3.324 21.248 3.077 19.976 2.702 18.049 3.295 17.305 4.278 16.073L4.537 15.748C5.2 14.907 5.459 14.081 5.035 11.902 4.086 7.022 6.284 3.687 11.064 2.753 15.846 1.83 19.134 4.096 20.083 8.977 20.506 11.156 21.056 11.824 21.986 12.355L21.986 12.356 22.348 12.561C23.72 13.335 24.548 13.802 24.923 15.73Z"></path></svg>
+          {optiondownnotify?<div className='option-down' style={{position:'relative',width:'350px',height:'400px',backgroundColor:'#ffffff',right:'250px',top:'15px',border:'1px solid #e4e6eb',borderRadius:'6px'}}>
+            <ul className='' style={{overflowY:'scroll',maxHeight:'400px'}}>
+            {notifydata.length>0&&notifydata.map(item=><ItemNotify key={item._id} item={item}  socket={socket} />)}
+            </ul>
+          </div>:null}
         </div>
         <div  className='topbarRight-hover bg-item-nav' style={{width:'40px',height:'40px',borderRadius:'20px',marginRight:'12px',cursor:'pointer'}}>
           <i className='lzf7d6o1' onClick={()=>setOptionDown(!optiondown)}></i>

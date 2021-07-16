@@ -10,12 +10,24 @@ import { useRecoilValue } from 'recoil';
 import UserData from '../../configData/UserData';
 import io from 'socket.io-client'
 import { Viewport } from 'react-is-in-viewport';
+import GIF from '../IconGIf'
 import PostAPI from '../../API/PostAPI';
+import like from '../../assets/svg/like.svg'
+import love from '../../assets/svg/love.svg'
+import sad from '../../assets/svg/sad.svg'
+import angry from '../../assets/svg/angry.svg'
+import wow from '../../assets/svg/wow.svg'
+import haha from '../../assets/svg/haha.svg'
 const serverIO='http://localhost:5000'
 const News = ({item,media,view}) => {
+    console.log(item)
     const socket=useRef();
     const [userPost,setUserPost]=useState({})
-    const [isLiked, setIsLiked] = useState(false);
+    const [isLiked, setIsLiked] = useState({
+        status:false,
+        type:''
+    });
+    const[displayListGifFeel,setdisplayListGifFeel]=useState(false)
     const [post,setPost]=useState(item)
     const user =useRecoilValue(UserData)
     const {user:currentUser}={...user}
@@ -33,9 +45,17 @@ const News = ({item,media,view}) => {
      useEffect(()=>{
         socket.current=io(serverIO)
      },[post._id])
-    //  useEffect(() => {
-    //     setIsLiked(post.likes.includes(currentUser._id));
-    // }, [currentUser._id, post.likes.length,post]);
+
+     useEffect(() => {
+         if(currentUser){
+       const itemLike= post.likes.find(item=>item.idlike==currentUser._id)
+        if(itemLike){
+            setIsLiked({status:true,type:itemLike.type})
+        }else{
+            setIsLiked({status:false,type:''})
+        }
+    }
+    }, [currentUser&&currentUser._id, post.likes.length,post]);
 
     useEffect(() => {
         getUser()
@@ -66,8 +86,8 @@ const News = ({item,media,view}) => {
     },[])
   
 
-    const likePost=async()=>{
-        socket.current.emit('likePost',{userId:currentUser._id,postId:post._id})
+    const likePost=async(type)=>{
+        socket.current.emit('likePost',{userId:currentUser._id,postId:post._id,type:type})
     }
     
     const joinRoomPost=()=>{
@@ -120,27 +140,107 @@ const News = ({item,media,view}) => {
                 <div style={{height:'42px',borderBottom:'1px solid #e4e6eb'}}>
                     <div className='icon-cam-xuc d-flex align-items-center ' >
                         <span className='d-flex align-items-center p-2' style={{display:'inline-block',flex:'1'}}>
+                            {post.likes.some(item=>item.type==''||item.type=='LIKE')&&
                             <span className='cursor-pointer'>
-                                <img style={{width:'18px',height:'18px'}} src="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 16 16'%3e%3cdefs%3e%3clinearGradient id='a' x1='50%25' x2='50%25' y1='0%25' y2='100%25'%3e%3cstop offset='0%25' stop-color='%2318AFFF'/%3e%3cstop offset='100%25' stop-color='%230062DF'/%3e%3c/linearGradient%3e%3cfilter id='c' width='118.8%25' height='118.8%25' x='-9.4%25' y='-9.4%25' filterUnits='objectBoundingBox'%3e%3cfeGaussianBlur in='SourceAlpha' result='shadowBlurInner1' stdDeviation='1'/%3e%3cfeOffset dy='-1' in='shadowBlurInner1' result='shadowOffsetInner1'/%3e%3cfeComposite in='shadowOffsetInner1' in2='SourceAlpha' k2='-1' k3='1' operator='arithmetic' result='shadowInnerInner1'/%3e%3cfeColorMatrix in='shadowInnerInner1' values='0 0 0 0 0 0 0 0 0 0.299356041 0 0 0 0 0.681187726 0 0 0 0.3495684 0'/%3e%3c/filter%3e%3cpath id='b' d='M8 0a8 8 0 00-8 8 8 8 0 1016 0 8 8 0 00-8-8z'/%3e%3c/defs%3e%3cg fill='none'%3e%3cuse fill='url(%23a)' xlink:href='%23b'/%3e%3cuse fill='black' filter='url(%23c)' xlink:href='%23b'/%3e%3cpath fill='white' d='M12.162 7.338c.176.123.338.245.338.674 0 .43-.229.604-.474.725a.73.73 0 01.089.546c-.077.344-.392.611-.672.69.121.194.159.385.015.62-.185.295-.346.407-1.058.407H7.5c-.988 0-1.5-.546-1.5-1V7.665c0-1.23 1.467-2.275 1.467-3.13L7.361 3.47c-.005-.065.008-.224.058-.27.08-.079.301-.2.635-.2.218 0 .363.041.534.123.581.277.732.978.732 1.542 0 .271-.414 1.083-.47 1.364 0 0 .867-.192 1.879-.199 1.061-.006 1.749.19 1.749.842 0 .261-.219.523-.316.666zM3.6 7h.8a.6.6 0 01.6.6v3.8a.6.6 0 01-.6.6h-.8a.6.6 0 01-.6-.6V7.6a.6.6 0 01.6-.6z'/%3e%3c/g%3e%3c/svg%3e"/>
+                                <img style={{width:'18px',height:'18px'}} src={like}/>
                             </span>
+                            }
+                            {post.likes.some(item=>item.type=='LOVE')&&
                             <span className='cursor-pointer'>
-                                <img style={{width:'18px',height:'18px'}} src="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 16 16'%3e%3cdefs%3e%3clinearGradient id='a' x1='50%25' x2='50%25' y1='10.25%25' y2='100%25'%3e%3cstop offset='0%25' stop-color='%23FEEA70'/%3e%3cstop offset='100%25' stop-color='%23F69B30'/%3e%3c/linearGradient%3e%3clinearGradient id='d' x1='50%25' x2='50%25' y1='0%25' y2='100%25'%3e%3cstop offset='0%25' stop-color='%23472315'/%3e%3cstop offset='100%25' stop-color='%238B3A0E'/%3e%3c/linearGradient%3e%3clinearGradient id='e' x1='50%25' x2='50%25' y1='0%25' y2='81.902%25'%3e%3cstop offset='0%25' stop-color='%23FC607C'/%3e%3cstop offset='100%25' stop-color='%23D91F3A'/%3e%3c/linearGradient%3e%3cfilter id='c' width='118.8%25' height='118.8%25' x='-9.4%25' y='-9.4%25' filterUnits='objectBoundingBox'%3e%3cfeGaussianBlur in='SourceAlpha' result='shadowBlurInner1' stdDeviation='1'/%3e%3cfeOffset dy='-1' in='shadowBlurInner1' result='shadowOffsetInner1'/%3e%3cfeComposite in='shadowOffsetInner1' in2='SourceAlpha' k2='-1' k3='1' operator='arithmetic' result='shadowInnerInner1'/%3e%3cfeColorMatrix in='shadowInnerInner1' values='0 0 0 0 0.921365489 0 0 0 0 0.460682745 0 0 0 0 0 0 0 0 0.35 0'/%3e%3c/filter%3e%3cpath id='b' d='M16 8A8 8 0 110 8a8 8 0 0116 0'/%3e%3c/defs%3e%3cg fill='none'%3e%3cuse fill='url(%23a)' xlink:href='%23b'/%3e%3cuse fill='black' filter='url(%23c)' xlink:href='%23b'/%3e%3cpath fill='url(%23d)' d='M3 8.008C3 10.023 4.006 14 8 14c3.993 0 5-3.977 5-5.992C13 7.849 11.39 7 8 7c-3.39 0-5 .849-5 1.008'/%3e%3cpath fill='url(%23e)' d='M4.541 12.5c.804.995 1.907 1.5 3.469 1.5 1.563 0 2.655-.505 3.459-1.5-.551-.588-1.599-1.5-3.459-1.5s-2.917.912-3.469 1.5'/%3e%3cpath fill='%232A3755' d='M6.213 4.144c.263.188.502.455.41.788-.071.254-.194.369-.422.371-.78.011-1.708.255-2.506.612-.065.029-.197.088-.332.085-.124-.003-.251-.058-.327-.237-.067-.157-.073-.388.276-.598.545-.33 1.257-.48 1.909-.604a7.077 7.077 0 00-1.315-.768c-.427-.194-.38-.457-.323-.6.127-.317.609-.196 1.078.026a9 9 0 011.552.925zm3.577 0a8.953 8.953 0 011.55-.925c.47-.222.95-.343 1.078-.026.057.143.104.406-.323.6a7.029 7.029 0 00-1.313.768c.65.123 1.363.274 1.907.604.349.21.342.44.276.598-.077.18-.203.234-.327.237-.135.003-.267-.056-.332-.085-.797-.357-1.725-.6-2.504-.612-.228-.002-.351-.117-.422-.37-.091-.333.147-.6.41-.788z'/%3e%3c/g%3e%3c/svg%3e"/>
+                                <img style={{width:'18px',height:'18px'}} src={love}/>
                             </span>
+                            }               
+                            {post.likes.some(item=>item.type=='HAHA')&&
                             <span className='cursor-pointer'>
-                                <img style={{width:'18px',height:'18px'}} src="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 16 16'%3e%3cdefs%3e%3clinearGradient id='a' x1='50%25' x2='50%25' y1='0%25' y2='100%25'%3e%3cstop offset='0%25' stop-color='%23FF6680'/%3e%3cstop offset='100%25' stop-color='%23E61739'/%3e%3c/linearGradient%3e%3cfilter id='c' width='118.8%25' height='118.8%25' x='-9.4%25' y='-9.4%25' filterUnits='objectBoundingBox'%3e%3cfeGaussianBlur in='SourceAlpha' result='shadowBlurInner1' stdDeviation='1'/%3e%3cfeOffset dy='-1' in='shadowBlurInner1' result='shadowOffsetInner1'/%3e%3cfeComposite in='shadowOffsetInner1' in2='SourceAlpha' k2='-1' k3='1' operator='arithmetic' result='shadowInnerInner1'/%3e%3cfeColorMatrix in='shadowInnerInner1' values='0 0 0 0 0.710144928 0 0 0 0 0 0 0 0 0 0.117780134 0 0 0 0.349786932 0'/%3e%3c/filter%3e%3cpath id='b' d='M8 0a8 8 0 100 16A8 8 0 008 0z'/%3e%3c/defs%3e%3cg fill='none'%3e%3cuse fill='url(%23a)' xlink:href='%23b'/%3e%3cuse fill='black' filter='url(%23c)' xlink:href='%23b'/%3e%3cpath fill='white' d='M10.473 4C8.275 4 8 5.824 8 5.824S7.726 4 5.528 4c-2.114 0-2.73 2.222-2.472 3.41C3.736 10.55 8 12.75 8 12.75s4.265-2.2 4.945-5.34c.257-1.188-.36-3.41-2.472-3.41'/%3e%3c/g%3e%3c/svg%3e"/>
+                                <img style={{width:'18px',height:'18px'}} src={haha}/>
                             </span>
-                            <span className='ml-2 mt-1 onhover-text-decoration ' style={{fontSize:'.9375rem',color:'#656783'}}>{post.likes.length}</span>
+                            } {post.likes.some(item=>item.type=='WOW')&&
+                            <span className='cursor-pointer'>
+                                <img style={{width:'18px',height:'18px'}} src={wow}/>
+                            </span>
+                            } {post.likes.some(item=>item.type=='SAD')&&
+                            <span className='cursor-pointer'>
+                                <img style={{width:'18px',height:'18px'}} src={sad}/>
+                            </span>
+                            } {post.likes.some(item=>item.type=='ANGRY')&&
+                            <span className='cursor-pointer'>
+                                <img style={{width:'18px',height:'18px'}} src={angry}/>
+                            </span>
+                            } 
+                            <span className='ml-2 mt-1 onhover-text-decoration ' style={{fontSize:'.9375rem',color:'#656783'}}>{post.likes.length>0&&post.likes.length}</span>
                         </span>
                         <span className='d-flex align-items-center pt-1 ' style={{flex:'1',display:'inline-block',height:'42px'}}>
-                            <span className='onhover-text-decoration'  style={{lineHeight:'18px',cursor:'pointer',fontSize:'.9375rem',color:'#656783'}}>{`${post.comments.length} bình luận`}</span>
-                            <span  className='ml-2 onhover-text-decoration' style={{lineHeight:'18px',cursor:'pointer',fontSize:'.9375rem',color:'#656783'}}>127 lượt chia sẻ </span>
+                            <span className='onhover-text-decoration'  style={{lineHeight:'18px',cursor:'pointer',fontSize:'.9375rem',color:'#656783'}} onClick={()=>setdisplaycmt(true)}>{`${post.comments.length>0?post.comments.length:''} Bình luận`}</span>
+                            {/* <span  className='ml-2 onhover-text-decoration' style={{lineHeight:'18px',cursor:'pointer',fontSize:'.9375rem',color:'#656783'}}>127 lượt chia sẻ </span> */}
                         </span>
                     </div>
                 </div>
                 <div className='d-flex align-items-center ' style={{height:'40px',borderBottom:'1px solid #e4e6eb'}}>
-                    <div className="qwewqe-12 d-flex justify-content-center align-items-center" style={{color:'#606770',flex:'1',}} onClick={likePost}>
-                    {currentUser?<><span style={{lineHeight:'100%'}}><i className={!post.likes.includes(currentUser._id)?'icon-like ic':'icon-like ic liked'}></i></span>
-                        <span style={{lineHeight:'100%'}} className={post.likes.includes(currentUser._id)?'text-liked':''}>Thích</span></>:null}
+                    <div onMouseLeave={()=>setdisplayListGifFeel(false)} onMouseOver={()=>setdisplayListGifFeel(true)} onMouseMove={()=>setdisplayListGifFeel(true)} className="qwewqe-12 hover-nut-like d-flex justify-content-center align-items-center" style={{color:'#606770',flex:'1',}} onClick={()=>likePost('')}>
+                    {isLiked.status&&isLiked.type==''||isLiked.type=='LIKE'
+                        ?<>
+                        <span style={{lineHeight:'100%'}}><i className='icon-like ic liked'></i></span>
+                        <span style={{lineHeight:'100%'}} className='text-liked'>Thích</span>
+                        </>
+                        :null
+                    }
+                    {
+                    !isLiked.status&& 
+                        <>
+                        <span style={{lineHeight:'100%'}}><i className='icon-like ic'></i></span>
+                        <span style={{lineHeight:'100%'}}>Thích</span>
+                        </>
+                    }
+                    {isLiked.status&&isLiked.type=='HAHA'
+                        ?<>
+                        <span className='cursor-pointer'>
+                                <img style={{width:'18px',height:'18px'}} src={haha}/>
+                        </span>
+                        <span className='ml-1' style={{lineHeight:'100%',color:'rgb(247, 177, 37)',fontWeight:"600"}} >Haha</span>
+                        </>
+                        :null
+                        
+                    }
+                    {isLiked.status&&isLiked.type=='LOVE'
+                        ?<>
+                        <span className='cursor-pointer'>
+                                <img style={{width:'18px',height:'18px'}} src={love}/>
+                        </span>
+                        <span className='ml-1' style={{lineHeight:'100%',color:'rgb(245 62 88)',fontWeight:"600"}} >Yêu thích</span>
+                        </>
+                        :null
+                        
+                    }
+                    {isLiked.status&&isLiked.type=='WOW'
+                        ?<>
+                        <span className='cursor-pointer'>
+                                <img alt="Wow" class="" height="18" src={wow} width="18"/>
+                        </span>
+                        <span className='ml-1' style={{lineHeight:'100%',color:'rgb(247, 177, 37)',fontWeight:"600"}} >Wow</span>
+                        </>
+                        :null
+                        
+                    }
+                    {isLiked.status&&isLiked.type=='SAD'
+                        ?<>
+                        <span className='cursor-pointer'>
+                            <img alt="Buồn" class="" height="18" src={sad} width="18"/>
+                        </span>
+                        <span className='ml-1' style={{lineHeight:'100%',color:'rgb(247, 177, 37)',fontWeight:"600"}} >Buồn</span>
+                        </>
+                        :null
+                        
+                    }
+                    {isLiked.status&&isLiked.type=='ANGRY'
+                        ?<>
+                        <span className='cursor-pointer'>
+                                <img alt="Phẫn nộ" class="" height="18" src={angry} width="18"/>
+                        </span>
+                        <span className='ml-1' style={{lineHeight:'100%',color:'#ea7826',fontWeight:"600"}} >Phẫn nộ</span>
+                        </>
+                        :null
+                        
+                    }
                     </div>
                     <div onClick={()=>setdisplaycmt(true)} className=" qwewqe-12 d-flex justify-content-center align-items-center" style={{color:'#606770',flex:'1'}}>
                         <span style={{lineHeight:'100%'}}><i className='icon-comment ic'></i></span>
@@ -157,6 +257,7 @@ const News = ({item,media,view}) => {
                 </div>
                 
                 <Inputcmt currentUser={currentUser} socket={socket.current} setdisplaycmt={setdisplaycmt} post={post}/>
+                <GIF likePost={likePost} displayListGifFeel={displayListGifFeel} setdisplayListGifFeel={setdisplayListGifFeel} socket={socket.current}/>
             </div>
         {/* </Viewport> */}
 

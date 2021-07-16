@@ -4,15 +4,17 @@ import { useRecoilValue } from 'recoil';
 import PostData from '../../configData/PostData';
 import News from '../newsItem/news';
 import CloseIcon from '@material-ui/icons/Close';
+import PostAPI from '../../API/PostAPI';
 
 const Index = ({socket}) => {
+    const{getPostsById}=PostAPI()
     const videoRef=useRef()
     const params=useParams()
     const [item,setItem]=useState(null)
     const posts=useRecoilValue(PostData)
-    useEffect(() => {
-       const post= posts.find(item=>item._id===params.id)
-       setItem(post)
+    useEffect(async() => {
+       const p=await getPostsById(params.id)
+       setItem(p)
        
     }, [params.id]);
     const history=useHistory()

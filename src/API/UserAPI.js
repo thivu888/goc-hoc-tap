@@ -3,11 +3,14 @@ import axios from 'axios'
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import UserData, { listMessUser } from '../configData/UserData'
 import { useHistory } from 'react-router-dom';
+import StoryData from '../configData/StoryData';
+import NotifyData from '../configData/NotifyData';
 const UserAPI = () => {
     const usehisory=useHistory()
     const[User,setUser] =useRecoilState(UserData)
     const[listMess,setListMess] =useRecoilState(listMessUser)
-
+    const [listStory,setListStory]=useRecoilState(StoryData)
+    const[listnotify,setListNotify]=useRecoilState(NotifyData)
     const loadUser=async ()=>{
         if(localStorage.getItem('token_user'))
         {
@@ -21,7 +24,7 @@ const UserAPI = () => {
             if(res.data.success)
             {
                 setUser({user:res.data.user})
-                
+                setListNotify([...res.data.user.notify])
             }
         } catch (error) {
             console.log(error)
@@ -80,9 +83,37 @@ const UserAPI = () => {
         catch(e){
             console.log(e)
         }
+    },
+    createStory=async(data)=>{
+        try{
+            const res= await axios.post(`/api/story/create`,data,
+            {
+                headers: {'content-type': 'multipart/form-data'}
+            })
+            if(res.data.success){
+                
+                setListStory([...res.data.story])
+            }
+        }
+        catch(e){
+            console.log(e)
+        }
+    },
+    getStorys=async(data)=>{
+        try{
+            const res= await axios.get(`/api/story`)
+            if(res.data.success){
+                setListStory([...res.data.storys])
+            }
+        }
+        catch(e){
+            console.log(e)
+        }
     }
 
-    return {loadUser,login,register,logout,getUserById,getListMess};
+
+
+    return {loadUser,login,register,logout,getUserById,getListMess,createStory,getStorys};
 }
 
 export default UserAPI;

@@ -68,7 +68,7 @@ const Index = ({setoverlay,socket,setShowAlertCreated,setShowAlert}) => {
         })
         window.location.reload()
     }
-    
+    console.log(list)
     return (
         <div className='container'>
             <div  style={{maxWidth:'940px',margin:'0 auto',position:'relative'}}>
@@ -86,8 +86,8 @@ const Index = ({setoverlay,socket,setShowAlertCreated,setShowAlert}) => {
                 <div className='container d-flex flex-column '>
                     <h1 style={{fontWeight:'700',colỏ:'#000'}}>{userProfile&&userProfile.username}</h1>
                     <hr style={{margin:'8px 16px',backgroundColor:'#dadde1',color:'#dadde1'}}></hr>
-                    {user&&user.user&&user.user._id===params.id&&<CreateStatus setoverlay={setoverlay}/>}
-                    {list.length>0?list.map(item=><NewItem key={item._id} item={item} socket={socket}/>):<h3 className='mt-4'>Đăng bài viết</h3>}
+                    {user&&user.user&&user.user._id===params.id&&<CreateStatus socket={socket} setShowAlert={setShowAlert} setShowAlertCreated={setShowAlertCreated} setoverlay={setoverlay}/>}
+                    {list.length>0?list.map(item=><NewItem key={item._id} media={true} item={item} socket={socket}/>):<h3 className='mt-4'>Đăng bài viết</h3>}
                 </div>
             </div>
         </div>

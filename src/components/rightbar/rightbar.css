@@ -13,7 +13,7 @@
     width: 12px; 
     height: 12px;
     border-radius: 50%;
-    background-color: #31a24c;
+    background-color: #cfdad1;
     border: 2px solid #ffffff;
     position: relative;
     z-index: 1;
@@ -28,6 +28,7 @@
 .list-user-das-rightbar::after{
     left: -13px;
     top: 20px;
-
-
+}
+.list-user-das-rightbar-online::after{
+    background-color: #31a24c;
 }

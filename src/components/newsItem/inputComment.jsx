@@ -32,7 +32,9 @@ const InputComment = ({imgsize,currentUser,post,socket,setdisplaycmt,rep,comment
                room:post.postId.toString(),
                repcomment:[],
                createAt:new Date(Date.now()),
-               comment_Id:Math.random().toString(36).substring(2)+Math.random().toString(36).substring(2)
+               comment_Id:Math.random().toString(36).substring(2)+Math.random().toString(36).substring(2),
+               UserCreator:post.userId
+
            }
         //    if(rep&&comment_Id){
         //        alert('vao day')

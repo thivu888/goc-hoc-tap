@@ -3,7 +3,10 @@ import Carousel from "react-multi-carousel";
 import StoryItem from '../story/storyItem'
 import "react-multi-carousel/lib/styles.css";
 import CreateStory from './createStory';
-const index = () => {
+import { useRecoilValue } from 'recoil';
+import StoryData from '../../configData/StoryData';
+const Index = () => {
+  const storyList=useRecoilValue(StoryData)
     const responsive = {
         superLargeDesktop: {
           // the naming can be any, depends on you.
@@ -26,20 +29,13 @@ const index = () => {
     return (
         <div className='row'>
         <div style={{width:'100%'}}>
-        <Carousel responsive={responsive}>
-          <CreateStory/>
-            <StoryItem/>
-            <StoryItem/>
-            <StoryItem/>
-            <StoryItem/>
-            <StoryItem/>
-            <StoryItem/>
-            <StoryItem/>
-            <StoryItem/>
+        <Carousel responsive={responsive} itemClass={'col'} >
+            <CreateStory/>
+            {storyList.length>0&&storyList.map(item=><StoryItem key={item._id} item={item}/>)}
         </Carousel>
         </div>
     </div>
     );
 }
 
-export default index;
+export default Index;

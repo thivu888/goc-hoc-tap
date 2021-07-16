@@ -1,0 +1,31 @@
+.list-gif-feel{
+    position: relative;
+    top: -143px;
+    background-color: #fff;
+    animation: animation-list-icon-gif 0.5s ease;
+}
+
+.gif-feel{
+    width: 40px;
+    transition: all 0.5s ease;
+    background-color: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+.gif-feel:hover{
+    transform: scale(1.22);
+}
+
+@keyframes animation-list-icon-gif{
+    0%{
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0);
+
+    }
+}

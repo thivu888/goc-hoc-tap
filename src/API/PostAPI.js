@@ -32,7 +32,20 @@ const PostAPI = () => {
              console.log(error)
         }
     } 
-    return {getPosts,deletePost,getPostsByIdUser};
+    const getPostsById=async (id)=>{
+        try {
+         const res=await axios.get(`/api/post/getpostbyid/${id}`)
+
+            if (res.data.success){
+                console.log(res.data.post)
+                return res.data.post
+                }
+        }
+         catch (error) {
+             console.log(error)
+        }
+    } 
+    return {getPosts,deletePost,getPostsByIdUser,getPostsById};
 }
 
 export default PostAPI;

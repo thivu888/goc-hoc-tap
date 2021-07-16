@@ -89,6 +89,9 @@
 .qwewqe-12:hover{
     background-color: #ccccce;
 }
+.hover-nut-like:hover .list-gif-feel{
+    display: flex;
+}
 .dot-afas{
     height: 32px;
 }

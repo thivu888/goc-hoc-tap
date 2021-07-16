@@ -6,8 +6,9 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import UserData from '../../configData/UserData';
 import CloseIcon from '@material-ui/icons/Close';
 import PostData from '../../configData/PostData';
+import { Socket } from 'socket.io-client';
 
-const Index = ({setoverlay,setShowAlertCreated,setShowAlert}) => {
+const Index = ({setoverlay,setShowAlertCreated,setShowAlert,socket}) => {
     const [posts,setposts]=useRecoilState(PostData)
     const user=useRecoilValue(UserData)
     const [imgpost,setImgPost]=useState(null)
@@ -52,9 +53,13 @@ const Index = ({setoverlay,setShowAlertCreated,setShowAlert}) => {
         const res=await axios.post('/api/post',data,{
             headers: {'content-type': 'multipart/form-data'}
         })
+        socket.emit('create-post')
+
         setShowAlert(false)
         setShowAlertCreated(true)
-        setposts([res.data.newpost,...posts])
+        setTimeout(() => {
+            setShowAlertCreated(false)
+        }, 2000);
     }
     return (<>
         <div className='container create-status-wrap'>
@@ -102,8 +107,7 @@ const Index = ({setoverlay,setShowAlertCreated,setShowAlert}) => {
                       <div  className='cursor-pointer p-2' style={{margin:'auto',borderRadius:'8px',backgroundColor:'#1877f2',color:'white',width:'80%'}}>
                         Đăng
                       </div>
-                 </div>
-
+                </div>
         </div>
         </>
        

@@ -21,7 +21,7 @@ const Feed = ({setoverlay,socket,setShowAlertCreated,setShowAlert}) => {
             <div className='story-container'>
                <Story/>
             </div>
-            <CreateStatus setoverlay={setoverlay} setShowAlertCreated={setShowAlertCreated} setShowAlert={setShowAlert}/>
+            <CreateStatus socket={socket} setoverlay={setoverlay} setShowAlertCreated={setShowAlertCreated} setShowAlert={setShowAlert}/>
             {post.map(item=><NewsItem key={item._id} item={item} media={true} socket={socket}/>)}
         </div>
 

@@ -16,6 +16,7 @@ import Watch from './components/watch';
 import Topbar from './components/topbar'
 import ChatBox from './components/chat-box'
 import ForgotPassword from './components/forgotPass'
+import UICREATESTORY from './components/story/UICREATESTORY';
 const serverIO='http://localhost:5000'
 
 function App() {
@@ -25,16 +26,25 @@ function App() {
   const [showAlertCreated,setShowAlertCreated]=useState(false)
   const [user,setUser]=useRecoilState(UserData)
   const[overlay,setoverlay]=useState(false)
-  const{loadUser,getListMess}=UserAPI()
+  const{loadUser,getListMess,getStorys}=UserAPI()
   const {getPosts}=PostAPI()
   useEffect(() => {
     socket.current=io(serverIO)
     if(user.user)socket.current.emit('joinpages',user.user._id)
     loadUser()
     getPosts()
+    getStorys()
 
   }, []);
- 
+  
+  useEffect(() => {
+    socket.current.on('create-new-post',()=>{
+    getPosts()
+    })
+  
+
+  }, []);
+  
 
   const [userConnect,setUserConnect]=useState(null)
   const [chatBoxShow,setChatBoxShow]=useState(false)
@@ -52,6 +62,7 @@ function App() {
             <Route path='/register' ><Register/></Route>
             <Route path='/watch' ><Watch/></Route>
             <Route path='/posts/views/:id' ><View socket={socket.current}/></Route>
+            <Route path='/stories/create' ><UICREATESTORY setShowAlertCreated={setShowAlertCreated} setShowAlert={setShowAlert}/></Route>
             <Route path='/posts/video/:id' ><View  socket={socket.current}/></Route>
             <Route path='/profile/:id' ><Profile setShowAlertCreated={setShowAlertCreated} setShowAlert={setShowAlert}  setoverlay={setoverlay} socket={socket.current}/></Route>
             <Route path='/'>{user.user?<Home setShowAlertCreated={setShowAlertCreated} setShowAlert={setShowAlert} socket={socket.current} setUserConnect={setUserConnect} userConnect={userConnect} chatBoxShow={chatBoxShow}  setChatBoxShow={setChatBoxShow}  setoverlay={setoverlay}/>:<Redirect to='/login'/>}</Route>

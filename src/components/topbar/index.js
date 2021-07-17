@@ -9,6 +9,9 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import audioNotifyMess from '../../assets/audio/lvSDckxyoU5.ogg'
 import NotifyData from "../../configData/NotifyData";
 import ItemNotify from "./ItemNotify";
+import ListRequestAddFriend from "../../configData/ListRequestAddFriend";
+import ListRequestAddFriendSent from "../../configData/ListRequestAddFriendSent";
+import Friends from "../../configData/Friends";
 const serverIO='http://localhost:5000'
 export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
   const {logout,getListMess}=UserAPI()
@@ -21,6 +24,9 @@ export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
   const [listmess,setlistMessUser]=useRecoilState(listMessUser)
   const [listuser,setListUser]=useRecoilState(listUser)
   const [notifydata,setNotifyData]=useRecoilState(NotifyData)
+  const[RequestAddFriend,setListRequestAddFriend]=useRecoilState(ListRequestAddFriend)
+  const[RequestAddFriendSent,setListRequestAddFriendSent]=useRecoilState(ListRequestAddFriendSent)
+  const[listFriends,setListFriend]=useRecoilState(Friends)
     useEffect(()=>{
       let count=0;
       listmess.forEach(item=>{
@@ -79,6 +85,7 @@ export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
           setListUser(newlist)
       });
     },[])
+
   useEffect(()=>{
     socket.on('sever-send-list-mess',data=>{
        setlistMessUser([...data])
@@ -96,11 +103,27 @@ export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
   socket.on('server-send-notify-comment',data=>{
     setNotifyData([...data])
         audioRef.current.play()
-  },[]);
+  });
 
-     socket.on('sever-send-notify-mess',data=>{
-        audioRef.current.play();
+    socket.on('sever-send-notify-mess',data=>{
+        if(audioRef.current)audioRef.current.play();
         setlistMessUser([...data])
+    })
+    
+    socket.on('server-send-notify-add-friend',data=>{
+      setListRequestAddFriend([...data])
+    })
+    socket.on('server-send-request-add-friend',data=>{
+      console.log(data);
+      setListRequestAddFriendSent([...data])
+    })
+
+    socket.on('server-send-list-friend',data=>{
+      console.log(data)
+      setListFriend([...data])
+    })
+    socket.on('server-send-list-friend-user-sent',data=>{
+      setListFriend([...data])
     })
    },[])
   
@@ -157,6 +180,9 @@ export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
         </div></Link>
 
         <div className='topbarRight-hover bg-item-nav' style={{width:'40px',height:'40px',borderRadius:'20px',cursor:'pointer'}}> 
+          {RequestAddFriend.length>0?<div style={{top:'0',textAlign:'center',position:"absolute",width:'20px',height:'20px',borderRadius:'50%',backgroundColor:'red'}}>
+              <span style={{color:'white',display:'inline-block',position:"relative", top:'-2px'}}>{RequestAddFriend.length}</span>
+            </div> :null  } 
           <i data-visualcompletion="css-img" class="hu5pjgll"></i>
         </div>
 

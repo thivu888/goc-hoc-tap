@@ -6,7 +6,7 @@ const ItemMess = ({item,setChatBoxShow,setUserConnect,userCurrent}) => {
     const user=item.members.find(item=>item.user_id!==userCurrent.user_id)
     const [check,setCheck]=useState(false)
     useEffect(() => {
-       const test=  item.content[item.content.length-1].seen==false&&item.content[item.content.length-1].userSend!=userCurrent._id
+       const test=  item.content.length>0&&item.content[item.content.length-1].seen==false&&item.content[item.content.length-1].userSend!=userCurrent._id
        setCheck(test)
     }, [item._id]);
     let style={

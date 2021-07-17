@@ -5,12 +5,18 @@ import UserData, { listMessUser } from '../configData/UserData'
 import { useHistory } from 'react-router-dom';
 import StoryData from '../configData/StoryData';
 import NotifyData from '../configData/NotifyData';
+import ListRequestAddFriendSent from '../configData/ListRequestAddFriendSent';
+import ListRequestAddFriend from '../configData/ListRequestAddFriend';
+import Friends from '../configData/Friends';
 const UserAPI = () => {
     const usehisory=useHistory()
     const[User,setUser] =useRecoilState(UserData)
     const[listMess,setListMess] =useRecoilState(listMessUser)
     const [listStory,setListStory]=useRecoilState(StoryData)
     const[listnotify,setListNotify]=useRecoilState(NotifyData)
+    const[RequestAddFriend,setListRequestAddFriend]=useRecoilState(ListRequestAddFriend)
+    const[RequestAddFriendSent,setListRequestAddFriendSent]=useRecoilState(ListRequestAddFriendSent)
+    const [listfriends,setListFriends]=useRecoilState(Friends)
     const loadUser=async ()=>{
         if(localStorage.getItem('token_user'))
         {
@@ -25,9 +31,12 @@ const UserAPI = () => {
             {
                 setUser({user:res.data.user})
                 setListNotify([...res.data.user.notify])
+                 setListRequestAddFriend([...res.data.user.RequestAddfriend])
+                setListRequestAddFriendSent([...res.data.user.RequestAddfriendSent])
+                setListFriends([...res.data.user.friends])
             }
         } catch (error) {
-            console.log(error)
+            console.log('loi khi get user')
             setUser({user:null})
             localStorage.removeItem('token_user')
         }
@@ -74,9 +83,7 @@ const UserAPI = () => {
     getListMess=async(id)=>{
         try{
             const res= await axios.get(`api/user/getlistmess/${id}`)
-            console.log(res)
             if(res.data.success){
-                console.log(res.data.list)
                 setListMess([...res.data.list])
             }
         }

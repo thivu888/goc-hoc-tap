@@ -53,6 +53,16 @@
     opacity: 0.8;
     display: block;
   }
+  .scroll-custom::-webkit-scrollbar {
+    width: 8px;
+    opacity: 0.8;
+    display: none;
+  }
+  .scroll-custom:hover::-webkit-scrollbar {
+    width: 8px;
+    opacity: 0.8;
+    display: block;
+  }
   ::-webkit-scrollbar-track {
     background-color: #f1f1f1;
   }

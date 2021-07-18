@@ -1,0 +1,41 @@
+{
+  "files": {
+    "main.css": "/goc-hoc-tap/static/css/main.f0d77979.chunk.css",
+    "main.js": "/goc-hoc-tap/static/js/main.a4119526.chunk.js",
+    "main.js.map": "/goc-hoc-tap/static/js/main.a4119526.chunk.js.map",
+    "runtime-main.js": "/goc-hoc-tap/static/js/runtime-main.b5e696e4.js",
+    "runtime-main.js.map": "/goc-hoc-tap/static/js/runtime-main.b5e696e4.js.map",
+    "static/css/2.71ef66a7.chunk.css": "/goc-hoc-tap/static/css/2.71ef66a7.chunk.css",
+    "static/js/2.9249294b.chunk.js": "/goc-hoc-tap/static/js/2.9249294b.chunk.js",
+    "static/js/2.9249294b.chunk.js.map": "/goc-hoc-tap/static/js/2.9249294b.chunk.js.map",
+    "static/js/3.a3c34fb6.chunk.js": "/goc-hoc-tap/static/js/3.a3c34fb6.chunk.js",
+    "static/js/3.a3c34fb6.chunk.js.map": "/goc-hoc-tap/static/js/3.a3c34fb6.chunk.js.map",
+    "index.html": "/goc-hoc-tap/index.html",
+    "static/css/2.71ef66a7.chunk.css.map": "/goc-hoc-tap/static/css/2.71ef66a7.chunk.css.map",
+    "static/css/main.f0d77979.chunk.css.map": "/goc-hoc-tap/static/css/main.f0d77979.chunk.css.map",
+    "static/js/2.9249294b.chunk.js.LICENSE.txt": "/goc-hoc-tap/static/js/2.9249294b.chunk.js.LICENSE.txt",
+    "static/media/angry.50c0e1ac.svg": "/goc-hoc-tap/static/media/angry.50c0e1ac.svg",
+    "static/media/angry.832bd960.gif": "/goc-hoc-tap/static/media/angry.832bd960.gif",
+    "static/media/bg-story.e7c78528.png": "/goc-hoc-tap/static/media/bg-story.e7c78528.png",
+    "static/media/App.css": "/goc-hoc-tap/static/media/boxicons.cbd149c5.ttf",
+    "static/media/haha.3fb063b0.svg": "/goc-hoc-tap/static/media/haha.3fb063b0.svg",
+    "static/media/haha.c50a8c50.gif": "/goc-hoc-tap/static/media/haha.c50a8c50.gif",
+    "static/media/like.75f9bea1.svg": "/goc-hoc-tap/static/media/like.75f9bea1.svg",
+    "static/media/like.8da211ae.gif": "/goc-hoc-tap/static/media/like.8da211ae.gif",
+    "static/media/love.09fee837.svg": "/goc-hoc-tap/static/media/love.09fee837.svg",
+    "static/media/love.8d4cabec.gif": "/goc-hoc-tap/static/media/love.8d4cabec.gif",
+    "static/media/lvSDckxyoU5.6902af1c.ogg": "/goc-hoc-tap/static/media/lvSDckxyoU5.6902af1c.ogg",
+    "static/media/styles.css": "/goc-hoc-tap/static/media/revicons.e8746a62.woff",
+    "static/media/sad.b27c7807.svg": "/goc-hoc-tap/static/media/sad.b27c7807.svg",
+    "static/media/sad.f763e388.gif": "/goc-hoc-tap/static/media/sad.f763e388.gif",
+    "static/media/wow.58d006b4.svg": "/goc-hoc-tap/static/media/wow.58d006b4.svg",
+    "static/media/wow.cdf34509.gif": "/goc-hoc-tap/static/media/wow.cdf34509.gif"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b5e696e4.js",
+    "static/css/2.71ef66a7.chunk.css",
+    "static/js/2.9249294b.chunk.js",
+    "static/css/main.f0d77979.chunk.css",
+    "static/js/main.a4119526.chunk.js"
+  ]
+}

@@ -6,13 +6,16 @@ import UserData from '../../configData/UserData';
 import { Redirect } from 'react-router-dom';
 import {Link} from 'react-router-dom'
 import { CircularProgress } from "@material-ui/core";
+import ErrorLogin from "../../configData/ErrorLogin";
 
 export default function Login() {
   const user=useRecoilValue(UserData)
+  const [errorLogin,setErrorLogin]=useRecoilState(ErrorLogin)
   const [state, setstate] = useState({
       email:'',
       password:''
   });
+  const[eror,setEror]=useState(false)
   const [isFetching,setIsFetching]=useState(false)
 
 
@@ -22,15 +25,13 @@ export default function Login() {
         const name=e.target.name;
         const value=e.target.value;
         setstate({...state,[name]:value})
-        console.log(value)
+        setErrorLogin('')
     }
     const onSubmitHandle=(e)=>{
         e.preventDefault();
         setIsFetching(true)
         login(state)
         setIsFetching(false)
-
-        
     }
     if(user.user) return <Redirect to='/'/>
   return (
@@ -63,6 +64,7 @@ export default function Login() {
               value={state.password}
               name='password'
             />
+            {errorLogin?<span>{errorLogin}</span>:null}
             <button className="loginButton" type="submit" disabled={isFetching}>
               {isFetching ? (
                 <CircularProgress color="white" size="20px" />

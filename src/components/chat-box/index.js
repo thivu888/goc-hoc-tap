@@ -1,9 +1,13 @@
 import React, { useEffect, useRef,useState } from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import './chat-box.css'
-import { Socket } from 'socket.io-client';
+import Picker from 'emoji-picker-react';
 import ChatItem from './chatItem';
+import { useHistory } from 'react-router-dom';
+
 const Index = ({setChatBoxShow,currentUser,userConnect,socket}) => {
+	const history=useHistory()
+    const [showEmoji,setShowEmoji]=useState(false)  
 	const scroll=useRef()
 	const[mess,setMess]=useState([])
 	const [contentMess,setContentMess]=useState('')
@@ -41,13 +45,17 @@ const Index = ({setChatBoxShow,currentUser,userConnect,socket}) => {
 			mess_id:Math.random().toString(36).substring(2)+Math.random().toString(36).substring(2)+Math.random().toString(36).substring(2)+Math.random().toString(36).substring(2)+Math.random().toString(36).substring(2)
 		})
 		setContentMess('')
+		setShowEmoji(false)
 		socket.emit('send-notify-seen-server',{id:currentUser._id,room:(currentUser.user_id+userConnect.user_id)})
 	}
+	const onEmojiClick = (event, emojiObject) => {
+        setContentMess(contentMess+emojiObject.emoji);
+      };
     return (
        <div className='chatboxWraper' style={{boxShadow:'0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 19%)'}}>
-			<div className='d-flex mt-2 ml-2 mr-2 p-1 align-items-center chatbox-header' style={{boxShadow:'0 2px rgba(0,0,0,0.1)'}}>
-				<img style={{width:'36px',height:'36px',float:'left',borderRadius:'50%'}} src={userConnect&&userConnect.profilePicture} />
-                  <div className='d-flex flex-column align-items-start justify-content-center '>
+			<div className='d-flex mt-2 ml-2 mr-2 p-1 align-items-center chatbox-header cursor-pointer' style={{boxShadow:'0 2px rgba(0,0,0,0.1)'}} >
+				<img style={{width:'36px',height:'36px',float:'left',borderRadius:'50%'}} src={userConnect&&userConnect.profilePicture} onClick={()=>history.push(`/profile/${userConnect._id}`)} />
+                  <div className='d-flex flex-column align-items-start justify-content-center ' onClick={()=>history.push(`/profile/${userConnect._id}`)}>
                       <span style={{color:'#050505',marginLeft:'8px',fontWeight:'600'}}>{userConnect&&userConnect.username}</span>
                   </div>
 				 <div className='cursor-pointer' style={{position:'absolute',right:'10px',top:'-2px'}} onClick={()=>setChatBoxShow(false)}><CloseIcon/></div> 
@@ -61,8 +69,14 @@ const Index = ({setChatBoxShow,currentUser,userConnect,socket}) => {
 				
 			</ul>
 			<div className='d-flex mt-2 ml-2 mr-2 p-2 chatbox-footer align-items-center' style={{borderTop:'1px solid rgba(0,0,0,0.1)',height:'50px',boxShadow:'0 2px rgba(0,0,0,0.1)'}}>
-                 <input onKeyPress={(e)=>{if(e.charCode==13){sendMess()}}} onChange={onHandleChangeInput} value={contentMess} className='p-1' style={{height:'100%',outline:'none',borderRadius:'24px',width:'90%',border:'none',backgroundColor:'#f0f2f5'}} placeholder='nhập tin nhắn ...'/>
-				 <span style={{lineHeight:'32px'}}  className='icon-feel-cmt ic cursor-pointer ml-2'></span>	
+					<input onKeyPress={(e)=>{if(e.charCode==13){sendMess()}}} onChange={onHandleChangeInput} value={contentMess} className='p-1' style={{height:'100%',outline:'none',borderRadius:'24px',width:'90%',border:'none',backgroundColor:'#f0f2f5'}} placeholder='nhập tin nhắn ...'/>
+					<span style={{lineHeight:'32px'}}  className='icon-feel-cmt ic cursor-pointer ml-2' onClick={()=>setShowEmoji(!showEmoji)}></span>
+					{showEmoji?
+					<div style={{position:'absolute',top:'-335px',right:'2px'}}>
+									<Picker onEmojiClick={onEmojiClick}/>
+					</div>:null
+					}
+					
 			</div>
 	   </div>
     );

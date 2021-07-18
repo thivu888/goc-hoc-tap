@@ -8,6 +8,7 @@ import NotifyData from '../configData/NotifyData';
 import ListRequestAddFriendSent from '../configData/ListRequestAddFriendSent';
 import ListRequestAddFriend from '../configData/ListRequestAddFriend';
 import Friends from '../configData/Friends';
+import ErrorLogin from '../configData/ErrorLogin';
 const UserAPI = () => {
     const usehisory=useHistory()
     const[User,setUser] =useRecoilState(UserData)
@@ -17,6 +18,7 @@ const UserAPI = () => {
     const[RequestAddFriend,setListRequestAddFriend]=useRecoilState(ListRequestAddFriend)
     const[RequestAddFriendSent,setListRequestAddFriendSent]=useRecoilState(ListRequestAddFriendSent)
     const [listfriends,setListFriends]=useRecoilState(Friends)
+    const [errorLogin,setErrorLogin]=useRecoilState(ErrorLogin)
     const loadUser=async ()=>{
         if(localStorage.getItem('token_user'))
         {
@@ -34,6 +36,8 @@ const UserAPI = () => {
                  setListRequestAddFriend([...res.data.user.RequestAddfriend])
                 setListRequestAddFriendSent([...res.data.user.RequestAddfriendSent])
                 setListFriends([...res.data.user.friends])
+                setErrorLogin('')
+
             }
         } catch (error) {
             console.log('loi khi get user')
@@ -51,7 +55,7 @@ const UserAPI = () => {
                loadUser();
             }
         } catch (error) {
-            console.log(error)
+            setErrorLogin('có vấn đề về tài khoản và mật khẩu,vui lòng đăng nhập lại')
         }
     }
     const logout=async()=>{
@@ -110,6 +114,7 @@ const UserAPI = () => {
         try{
             const res= await axios.get(`/api/story`)
             if(res.data.success){
+                console.log(res.data.storys)
                 setListStory([...res.data.storys])
             }
         }

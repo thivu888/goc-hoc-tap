@@ -12,6 +12,7 @@ import ItemNotify from "./ItemNotify";
 import ListRequestAddFriend from "../../configData/ListRequestAddFriend";
 import ListRequestAddFriendSent from "../../configData/ListRequestAddFriendSent";
 import Friends from "../../configData/Friends";
+import ItemAddFriend from "./ItemAddFriend";
 const serverIO='http://localhost:5000'
 export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
   const {logout,getListMess}=UserAPI()
@@ -19,6 +20,8 @@ export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
     const {user}={...userstate}
     const [countMess,setCountMess]=useState(0);
     const [countNotify,setCountNotify]=useState(0);
+    const [listfriends,setListFriends]=useState([])
+
   // const socket=useRef()
   const audioRef=useRef()
   const [listmess,setlistMessUser]=useRecoilState(listMessUser)
@@ -50,6 +53,7 @@ export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
   const [optiondown,setOptionDown]=useState(false)
   const [optiondownmess,setOptionDownmess]=useState(false)
   const [optiondownnotify,setOptionDownnotify]=useState(false)
+  const[optiondownfriend,setOptiondownfriend]=useState(false)
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [active,setActive]=useState({
     home:false,
@@ -67,6 +71,19 @@ export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
       [name]:true
     })
   }
+  useEffect(()=>{
+    let listfr=[]
+  
+ 
+    RequestAddFriend.forEach(item=>{
+       const u= listuser.find(it=>it._id==item.id)
+       if(u){
+        listfr.push(u)
+       }
+    })
+    setListFriends([...listfr])
+},[listuser.length,RequestAddFriend.length,listuser,RequestAddFriend])
+
   useEffect(()=>{
     if(user)
     getListMess(user.user_id)
@@ -174,19 +191,28 @@ export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
 
       </ul>
       <div className="topbarRight">
-        <Link to={`/profile/${user&&user._id}`}><div className='topbarRight-hover ' style={{display:'flex',cursor:'pointer',borderRadius:'12px'}}>
+        <Link to={`/profile/${user&&user._id}`}>
+          <div className='topbarRight-hover ' style={{display:'flex',cursor:'pointer',borderRadius:'12px'}}>
           <img style={{width:'28px',height:'28px',borderRadius:'50%'}} src={user&&user.profilePicture}/>
           <span style={{color:'#121212',marginLeft:'4px',fontWeight:'400',whiteSpace:'nowrap'}}>{user&&user.username}</span>
-        </div></Link>
+        </div>
+        </Link>
 
-        <div className='topbarRight-hover bg-item-nav' style={{width:'40px',height:'40px',borderRadius:'20px',cursor:'pointer'}}> 
+        <div className='topbarRight-hover bg-item-nav' style={{width:'40px',height:'40px',borderRadius:'20px',cursor:'pointer'}} onClick={()=>{setOptionDown(false);setOptionDownmess(false);setOptionDownnotify(false);setOptiondownfriend(!optiondownfriend)}}> 
           {RequestAddFriend.length>0?<div style={{top:'0',textAlign:'center',position:"absolute",width:'20px',height:'20px',borderRadius:'50%',backgroundColor:'red'}}>
               <span style={{color:'white',display:'inline-block',position:"relative", top:'-2px'}}>{RequestAddFriend.length}</span>
             </div> :null  } 
           <i data-visualcompletion="css-img" class="hu5pjgll"></i>
+          {optiondownfriend?<div className='option-down' style={{position:'relative',width:'350px',height:'400px',backgroundColor:'#ffffff',right:'250px',top:'15px',border:'1px solid #e4e6eb',borderRadius:'6px'}}>
+            <ul className=''>
+            {listfriends.length>0&&listfriends.map(item=><ItemAddFriend key={item._id} user={item} socket={socket}/>)}
+            </ul>
+          </div>:null}
+            
+          
         </div>
 
-        <div className='topbarRight-hover bg-item-nav' style={{width:'40px',height:'40px',borderRadius:'20px',cursor:'pointer'}} onClick={()=>setOptionDownmess(!optiondownmess)}>
+        <div className='topbarRight-hover bg-item-nav' style={{width:'40px',height:'40px',borderRadius:'20px',cursor:'pointer'}} onClick={()=>{setOptiondownfriend(false);setOptionDown(false);setOptionDownnotify(false);setOptionDownmess(!optiondownmess)}}>
             {countMess>0?<div style={{top:'0',textAlign:'center',position:"absolute",width:'20px',height:'20px',borderRadius:'50%',backgroundColor:'red'}}>
               <span style={{color:'white',display:'inline-block',position:"relative", top:'-2px'}}>{countMess}</span>
             </div> :null  } 
@@ -198,7 +224,7 @@ export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
             </ul>
           </div>:null}
         </div>
-        <div className='topbarRight-hover bg-item-nav' style={{width:'40px',height:'40px',borderRadius:'20px',cursor:'pointer'}} onClick={()=>setOptionDownnotify(!optiondownnotify)}>
+        <div className='topbarRight-hover bg-item-nav' style={{width:'40px',height:'40px',borderRadius:'20px',cursor:'pointer'}} onClick={()=>{setOptiondownfriend(false);setOptionDown(false);setOptionDownmess(false);setOptionDownnotify(!optiondownnotify)}}>
             {countNotify>0?<div style={{top:'0',textAlign:'center',position:"absolute",width:'20px',height:'20px',borderRadius:'50%',backgroundColor:'red'}}>
               <span style={{color:'white',display:'inline-block',position:"relative", top:'-2px'}}>{countNotify}</span>
             </div> :null  }
@@ -209,8 +235,8 @@ export default function Topbar({setChatBoxShow,setUserConnect,socket}) {
             </ul>
           </div>:null}
         </div>
-        <div  className='topbarRight-hover bg-item-nav' style={{width:'40px',height:'40px',borderRadius:'20px',marginRight:'12px',cursor:'pointer'}}>
-          <i className='lzf7d6o1' onClick={()=>setOptionDown(!optiondown)}></i>
+        <div  className='topbarRight-hover bg-item-nav' style={{width:'40px',height:'40px',borderRadius:'20px',marginRight:'12px',cursor:'pointer'}} onClick={()=>{setOptionDown(!optiondown);setOptiondownfriend(false);setOptionDownmess(false);setOptionDownnotify(false)}} >
+          <i className='lzf7d6o1' ></i>
           {optiondown?<div className='option-down' style={{position:'relative',width:'350px',height:'400px',backgroundColor:'#ffffff',right:'312px',top:'10px',border:'1px solid #e4e6eb',borderRadius:'6px'}}>
             <div className='d-flex m-2 p-1'>
               <Link to={`profile/${user._id}`}>

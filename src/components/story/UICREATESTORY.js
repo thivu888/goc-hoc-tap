@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil';
 import UserAPI from '../../API/UserAPI';
 import UserData from '../../configData/UserData';
 import { useHistory } from 'react-router-dom';
-const UICREATESTORY = ({setShowAlertCreated,setShowAlert}) => {
+const UICREATESTORY = ({setShowAlertCreated,setShowAlert,socket}) => {
     const{createStory}=UserAPI()
     const user=useRecoilValue(UserData)
     const [file,setFile]=useState(null)
@@ -30,13 +30,14 @@ const UICREATESTORY = ({setShowAlertCreated,setShowAlert}) => {
         data.append('file',file);
         data.append('id',user.user._id)
         setShowAlert(true)
-        createStory(data)
+        await createStory(data)
         setShowAlert(false)
         setShowAlertCreated(true)
         setTimeout(()=>
         setShowAlertCreated(false),2000
         )
         setFile(null)
+        socket.emit('up-story')
     }
     return (
         <div style={{position:'fixed',bottom:'0',left:'0',right:'0',top:'0'}}>

@@ -1,6 +1,6 @@
 import './App.css';
 import { useState ,useEffect,useRef} from 'react';
-import { BrowserRouter as Router ,Switch,Route,Redirect} from 'react-router-dom';
+import { BrowserRouter as Router ,Switch,Route,Redirect, useHistory} from 'react-router-dom';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register'
 import Home from './pages/Home/Home';
@@ -21,7 +21,6 @@ const serverIO='http://localhost:5000'
 
 function App() {
     const socket=useRef()
- 
   const [showAlert,setShowAlert]=useState(false)
   const [showAlertCreated,setShowAlertCreated]=useState(false)
   const [user,setUser]=useRecoilState(UserData)
@@ -41,7 +40,11 @@ function App() {
     socket.current.on('create-new-post',()=>{
     getPosts()
     })
-  
+    socket.current.on('up-story-new',()=>{
+
+      console.log('update')
+      getStorys()
+    })
 
   }, []);
   
@@ -49,10 +52,11 @@ function App() {
   const [userConnect,setUserConnect]=useState(null)
   const [chatBoxShow,setChatBoxShow]=useState(false)
   return (
+    <Router>
+
     <div className={'App'} style={{position:'relative'}}>
         <div className={overlay?'postoverlay':''}onClick={()=>setoverlay(false)}></div>
 
-      <Router>
       {user.user?<Topbar socket={socket.current} setUserConnect={setUserConnect} setChatBoxShow={setChatBoxShow} />:null}
 
           <Switch>
@@ -60,18 +64,19 @@ function App() {
             <Route path='/login' ><Login/></Route>
             <Route path='/forgot' ><ForgotPassword/></Route>
             <Route path='/register' ><Register/></Route>
-            <Route path='/watch' ><Watch/></Route>
-            <Route path='/posts/views/:id' ><View socket={socket.current}/></Route>
-            <Route path='/stories/create' ><UICREATESTORY setShowAlertCreated={setShowAlertCreated} setShowAlert={setShowAlert}/></Route>
-            <Route path='/posts/video/:id' ><View  socket={socket.current}/></Route>
-            <Route path='/profile/:id' ><Profile setShowAlertCreated={setShowAlertCreated} setShowAlert={setShowAlert}  setoverlay={setoverlay} socket={socket.current}/></Route>
+            <Route path='/watch' >{user.user?<Watch/>:<Redirect to='/login'/>}</Route>
+            <Route path='/posts/views/:id' >{user.user?<View socket={socket.current}/>:<Redirect to='/login'/>}</Route>
+            <Route path='/stories/create' >{user.user?<UICREATESTORY socket={socket.current} setShowAlertCreated={setShowAlertCreated} setShowAlert={setShowAlert}/>:<Redirect to='/login'/>}</Route>
+            <Route path='/posts/video/:id' >{user.user?<View  socket={socket.current}/>:<Redirect to='/login'/>}</Route>
+            <Route path='/profile/:id' >{user.user?<Profile setShowAlertCreated={setShowAlertCreated} setShowAlert={setShowAlert}  setoverlay={setoverlay} socket={socket.current} setUserConnect={setUserConnect} setChatBoxShow={setChatBoxShow}/>:<Redirect to='/login'/>}</Route>
             <Route path='/'>{user.user?<Home setShowAlertCreated={setShowAlertCreated} setShowAlert={setShowAlert} socket={socket.current} setUserConnect={setUserConnect} userConnect={userConnect} chatBoxShow={chatBoxShow}  setChatBoxShow={setChatBoxShow}  setoverlay={setoverlay}/>:<Redirect to='/login'/>}</Route>
           </Switch>
-       </Router>
+       
        {chatBoxShow?<ChatBox currentUser={user.user} socket={socket.current} setChatBoxShow={setChatBoxShow} userConnect={userConnect}/>:null}   
        <div style={{position:'fixed',bottom:'20px',left:"50px"}}><Alert onClose={()=>setShowAlert(false)} show={showAlert} closeLabel='Close alert' dismissible={true} variant="dark" >bài viết đang được xét duyệt</Alert></div> 
        <div style={{position:'fixed',bottom:'20px',left:"50px"}}><Alert onClose={()=>setShowAlertCreated(false)} show={showAlertCreated} closeLabel='Close alert' dismissible={true} variant="success" >bài viết đã được đăng</Alert></div> 
     </div>
+    </Router>
   );
 }
 

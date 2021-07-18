@@ -7,6 +7,7 @@ import { useRecoilValue } from 'recoil';
 import StoryData from '../../configData/StoryData';
 const Index = () => {
   const storyList=useRecoilValue(StoryData)
+  
     const responsive = {
         superLargeDesktop: {
           // the naming can be any, depends on you.
@@ -29,9 +30,9 @@ const Index = () => {
     return (
         <div className='row'>
         <div style={{width:'100%'}}>
-        <Carousel responsive={responsive} itemClass={'col'} >
+        <Carousel responsive={responsive} itemClass={'col'} swipeable={true} draggable={true} ssr={true} >
             <CreateStory/>
-            {storyList.length>0&&storyList.map(item=><StoryItem key={item._id} item={item}/>)}
+            {storyList.length>0?storyList.map(item=><StoryItem key={item._id} item={item}/>):null}
         </Carousel>
         </div>
     </div>

@@ -14,7 +14,7 @@ const CreateStory = () => {
                     <img className='story-item-img-create' style={{height:'150px',width:'100%',objectFit:'cover'}}  src={user.user.profilePicture} />
                 </div>
                 <div className=' d-flex flex-column justify-content-center' style={{width:'100%',height:'50px',backgroundColor:'#ffffff',color:'#000'}} >
-                   <div style={{left:'46px',top:'130px',position:'absolute',width:'40px',height:'40px',borderRadius:'50%',border:'3px solid #ffffff',backgroundColor:'#1876f2'}}> <i className='eqw12 mt-1'></i></div>
+                   <div style={{left:'52px',top:'130px',position:'absolute',width:'40px',height:'40px',borderRadius:'50%',border:'3px solid #ffffff',backgroundColor:'#1876f2'}}> <i className='eqw12 mt-1'></i></div>
                     <span className='mt-3' style={{float:'inline-end',color:'#050505',fontWeight:'600',fontSize:'14px'}}>Tạo tin</span>
                 </div>
             </div>

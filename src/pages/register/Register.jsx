@@ -17,7 +17,6 @@ export default function Register() {
     e.preventDefault();
     if (passwordAgain.current.value !== password.current.value) {
       passwordAgain.current.setCustomValidity("Passwords don't match!");
-      console.log(passwordAgain.current.value, password.current.value)
     } else {
       const user = {
         name: username.current.value,
@@ -64,6 +63,7 @@ export default function Register() {
               className="loginInput"
               type="password"
               minLength="6"
+              onInput={()=>passwordAgain.current.setCustomValidity('')}
             />
             <input
               placeholder="Password Again"
@@ -71,6 +71,7 @@ export default function Register() {
               ref={passwordAgain}
               className="loginInput"
               type="password"
+              onInput={()=>passwordAgain.current.setCustomValidity('')}
             />
             <button className="loginButton" type="submit">
               Sign Up

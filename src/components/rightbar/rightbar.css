@@ -3,7 +3,7 @@
     flex-grow: 1;
     position: sticky;
     height: calc(100vh - 50px);
-    top: 60px;
+    top: 80px;
     overflow-y: scroll;
 }
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios'
 import CloseIcon from '@material-ui/icons/Close';
+import Picker from 'emoji-picker-react';
 
 import filecommentRep from '../../configData/fileCommentRep';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -8,6 +9,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 const InputCommentRep = ({imgsize,currentUser,post,socket,comment_Id}) => {
     const [content, setContent] = useState('');
     const [fileRep,setFIleRep]=useRecoilState(filecommentRep)
+    const [showEmoji,setShowEmoji]=useState(false)  
     const onChangeInput=(e)=>{
         let name=e.target.name;
         let value=e.target.value;
@@ -22,6 +24,9 @@ const InputCommentRep = ({imgsize,currentUser,post,socket,comment_Id}) => {
             }
         
     }
+    const onEmojiClick = (event, emojiObject) => {
+        setContent(content+emojiObject.emoji);
+      };
     const submitHandle=async(e)=>{
         const dataform=new FormData()
       if(e.charCode==13)
@@ -54,11 +59,14 @@ const InputCommentRep = ({imgsize,currentUser,post,socket,comment_Id}) => {
                 <img style={{width:imgsize||'32px',height:imgsize||'32px',borderRadius:'50%'}} src={currentUser&&currentUser.profilePicture}/>
             </div>
             <div className='ml-2  qwert' style={{width:'90%',borderRadius:'24px',height:'32px'}}>
-                    <div className='d-flex' style={{height:'100%',borderRadius:'24px',width:'100%',overflow:'hidden'}}>
+                    <div className='d-flex' style={{height:'100%',borderRadius:'24px',width:'100%'}}>
                     <input value={content} name="content"  className='p-2' style={{flex:'3',outline:'none',height:'100%',borderRadius:'24px',border:'none',backgroundColor:'transparent'}} type='text' placeholder='Viết bình luận' onChange={onChangeInput} onKeyPress={submitHandle} />
                     <ul className='d-flex justify-content-around align-items-center p-2 pt-3' style={{margin:'0',height:'100%',flex:'1'}}>
-                        <li >
+                        <li style={{position:'relative'}} onClick={()=>setShowEmoji(!showEmoji)}>
                             <span style={{lineHeight:'32px'}}  className='icon-feel-cmt ic'></span>
+                            {showEmoji?<div style={{position:'absolute',top:'-335px',right:'2px'}}>
+                                <Picker onEmojiClick={onEmojiClick}/>
+                            </div>:null}
                         </li>
                         <li >
                             <label style={{margin:'0',cursor:'pointer'}} htmlFor='hinh-anh111'><span style={{lineHeight:'32px'}} className='icon-img-cmt ic'></span></label> 

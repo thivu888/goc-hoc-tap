@@ -14,28 +14,34 @@ const Index = ({socket,setChatBoxShow,setUserConnect}) => {
     const [listusers,setlistusers]=useState([])
     useEffect(()=>{
         let list=[...listuser]
-        console.log(friends);
-        console.log(listuser);
+        let listfr=[]
+      
         friends.forEach(item=>{
             list=list.filter(it=>it._id!=item.id)
         })
-        console.log('rerender')
+        friends.forEach(item=>{
+           const u= listuser.find(it=>it._id==item.id)
+           if(u){
+            listfr.push(u)
+           }
+        })
+        setListFriends([...listfr])
         setlistusers([...list])
-    },[listuser.length,friends.length])
-
+    },[listuser.length,friends.length,listuser,friends])
+    console.log(listfriends)
     return (
         <div className='rightbar col-xl-3 col-xxl-3 col-lg-3 d-flex flex-column align-items-start' style={{overflowX:'hidden'}}>
-            <div className='ml-3' style={{width:'100%'}} >
+            <div className='ml-3 d-flex' style={{width:'100%'}} >
                 <span style={{fontWeight:'600',color:'#65676b'}}>Gợi ý kết bạn</span>
             </div>
             <ul className='mt-2 scroll-custom' style={{width:'100%',height:"300px",overflowY:'scroll',overflowX:'hidden'}}>
                 {listusers&&listusers.length>0&&listusers.map((user)=><ListItemUser socket={socket} key={user._id} user={user} setChatBoxShow={setChatBoxShow} setUserConnect={setUserConnect} />)}
             </ul>
-            <div className='ml-3' style={{width:'100%'}} >
+            <div className='ml-3 d-flex' style={{width:'100%'}} >
                 <span style={{fontWeight:'600',color:'#65676b'}}>Bạn Bè</span>
             </div>
             <ul className='mt-2 scroll-custom' style={{width:'100%',maxHeight:"500px",overflowY:'scroll',overflowX:'hidden'}}>
-                {listuser&&listuser.length>0&&listuser.map((user)=><ListFriends socket={socket} key={user._id} user={user} setChatBoxShow={setChatBoxShow} setUserConnect={setUserConnect} />)}
+                {listfriends&&listfriends.length>0&&listfriends.map((user)=><ListFriends socket={socket} key={user._id} user={user} setChatBoxShow={setChatBoxShow} setUserConnect={setUserConnect} />)}
             </ul>
         </div>
     );

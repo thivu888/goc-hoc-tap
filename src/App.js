@@ -17,7 +17,8 @@ import Topbar from './components/topbar'
 import ChatBox from './components/chat-box'
 import ForgotPassword from './components/forgotPass'
 import UICREATESTORY from './components/story/UICREATESTORY';
-const serverIO='http://localhost:5000'
+import URL from './constants'
+const serverIO=URL
 
 function App() {
     const socket=useRef()

@@ -6,8 +6,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import UserData from '../../configData/UserData';
 import CloseIcon from '@material-ui/icons/Close';
 import PostData from '../../configData/PostData';
-import { Socket } from 'socket.io-client';
-
+import URL from '../../constants'
 const Index = ({setoverlay,setShowAlertCreated,setShowAlert,socket}) => {
     const [posts,setposts]=useRecoilState(PostData)
     const user=useRecoilValue(UserData)
@@ -50,7 +49,7 @@ const Index = ({setoverlay,setShowAlertCreated,setShowAlert,socket}) => {
         setVideoPost(null);
         setImgPost(null);
         setContentPost('')
-        const res=await axios.post('/api/post',data,{
+        const res=await axios.post(`${URL}/api/post`,data,{
             headers: {'content-type': 'multipart/form-data'}
         })
         socket.emit('create-post')

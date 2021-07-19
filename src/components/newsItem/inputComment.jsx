@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios'
 import CloseIcon from '@material-ui/icons/Close';
 import Picker from 'emoji-picker-react';
+import URLSV from '../../constants'
 
 import filecomment from '../../configData/fileComment';
 import filecommentRep from '../../configData/fileCommentRep';
@@ -43,7 +44,7 @@ const InputComment = ({imgsize,currentUser,post,socket,setdisplaycmt,rep,comment
            }
             if(file){
                 dataform.append('file',file)
-                const res=  await axios.post('/api/post/filecomment', dataform, { headers: {'content-type': 'multipart/form-data'}})
+                const res=  await axios.post(`${URLSV}/api/post/filecomment`, dataform, { headers: {'content-type': 'multipart/form-data'}})
                 data.filecomment={...res.data}
                 }
            socket.emit('sendComment',data)

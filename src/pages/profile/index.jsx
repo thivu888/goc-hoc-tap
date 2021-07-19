@@ -11,6 +11,7 @@ import icon_friend from '../../assets/images/icon-friend.png'
 import Friends from '../../configData/Friends';
 import ListRequestAddFriendSent from '../../configData/ListRequestAddFriendSent';
 import ListRequestAddFriend from '../../configData/ListRequestAddFriend';
+import URLSV from '../../constants'
 const Index = ({setoverlay,socket,setShowAlertCreated,setShowAlert,setChatBoxShow,setUserConnect}) => {
     const[avatarPicture,setAvatarPicture]=useState('')
     const[coverPicture,setCoverPicture]=useState('')
@@ -71,7 +72,7 @@ const Index = ({setoverlay,socket,setShowAlertCreated,setShowAlert,setChatBoxSho
             dataupdate.append('cover',data.cover)
         }
 
-        await axios.put('/api/user/updateprofile',dataupdate,{
+        await axios.put(`${URLSV}/api/user/updateprofile`,dataupdate,{
             headers: {'content-type': 'multipart/form-data'}
         })
         window.location.reload()

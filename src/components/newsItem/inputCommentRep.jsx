@@ -5,7 +5,7 @@ import Picker from 'emoji-picker-react';
 
 import filecommentRep from '../../configData/fileCommentRep';
 import { useRecoilState, useRecoilValue } from 'recoil';
-
+import URLSV from '../../constants'
 const InputCommentRep = ({imgsize,currentUser,post,socket,comment_Id}) => {
     const [content, setContent] = useState('');
     const [fileRep,setFIleRep]=useRecoilState(filecommentRep)
@@ -42,7 +42,7 @@ const InputCommentRep = ({imgsize,currentUser,post,socket,comment_Id}) => {
            }
             if(fileRep){
                 dataform.append('file',fileRep)
-                const res=  await axios.post('/api/post/filecomment', dataform, { headers: {'content-type': 'multipart/form-data'}})
+                const res=  await axios.post(`${URLSV}/api/post/filecomment`, dataform, { headers: {'content-type': 'multipart/form-data'}})
                 data.filecomment={...res.data}
             }
             socket.emit('sendComment-rep',{...data,comment_Id:comment_Id})

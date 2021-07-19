@@ -9,6 +9,7 @@ import ListRequestAddFriendSent from '../configData/ListRequestAddFriendSent';
 import ListRequestAddFriend from '../configData/ListRequestAddFriend';
 import Friends from '../configData/Friends';
 import ErrorLogin from '../configData/ErrorLogin';
+import URL from '../constants'
 const UserAPI = () => {
     const usehisory=useHistory()
     const[User,setUser] =useRecoilState(UserData)
@@ -28,7 +29,7 @@ const UserAPI = () => {
            delete axios.defaults.headers.common['Authorization'] ;
         }
         try {
-            const res=await axios.get('/api/user')
+            const res=await axios.get(`${URL}/api/user`)
             if(res.data.success)
             {
                 setUser({user:res.data.user})
@@ -47,7 +48,8 @@ const UserAPI = () => {
     }
     const login=async(data)=>{
         try {
-            const res = await axios.post('/api/user/login',data)
+            const res = await axios.post(`${URL}/api/user/login`,data)
+            console.log(`${URL}/api/user/login`)
             if(res.data.success)
             {
                usehisory.push('/')
@@ -64,7 +66,7 @@ const UserAPI = () => {
     }
     const register=async(data)=>{
         try {
-            const res=await axios.post('/api/user/register',data)
+            const res=await axios.post(`${URL}/api/user/register`,data)
             if(res.data.success)
             {
                localStorage.setItem('token_user',res.data.accesstoken) ;
@@ -76,7 +78,7 @@ const UserAPI = () => {
     }
     const getUserById=async(id)=>{
         try {
-        const user=await axios.get(`/api/user/getuserbyid/${id}`);
+        const user=await axios.get(`${URL}/api/user/getuserbyid/${id}`);
            if(user.data.success) return user.data.user
         } catch (error) {
             console.log(error)
@@ -86,7 +88,7 @@ const UserAPI = () => {
     ,
     getListMess=async(id)=>{
         try{
-            const res= await axios.get(`api/user/getlistmess/${id}`)
+            const res= await axios.get(`${URL}/api/user/getlistmess/${id}`)
             if(res.data.success){
                 setListMess([...res.data.list])
             }
@@ -97,7 +99,7 @@ const UserAPI = () => {
     },
     createStory=async(data)=>{
         try{
-            const res= await axios.post(`/api/story/create`,data,
+            const res= await axios.post(`${URL}/api/story/create`,data,
             {
                 headers: {'content-type': 'multipart/form-data'}
             })
@@ -112,7 +114,7 @@ const UserAPI = () => {
     },
     getStorys=async(data)=>{
         try{
-            const res= await axios.get(`/api/story`)
+            const res= await axios.get(`${URL}/api/story`)
             if(res.data.success){
                 console.log(res.data.storys)
                 setListStory([...res.data.storys])

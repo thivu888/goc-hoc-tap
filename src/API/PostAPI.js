@@ -2,10 +2,11 @@ import axios from 'axios';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import PostData from '../configData/PostData';
+import URL from '../constants'
 const PostAPI = () => {
     const [posts,setPost]=useRecoilState(PostData)
     const getPosts=async()=>{
-            axios.get('/api/post/getpost').
+            axios.get(`${URL}/api/post/getpost`).
             then(res=>{
 
                 setPost([...res.data.posts])
@@ -14,14 +15,14 @@ const PostAPI = () => {
     }
     const deletePost=async(data)=>{
         console.log(data)
-       await axios.post('/api/post/delete',data)
+       await axios.post(`${URL}/api/post/delete`,data)
         .then(res=>{
             window.location.reload()
         }).catch(er=>console.log(er))
     }
     const getPostsByIdUser=async (id)=>{
         try {
-         const res=await axios.get(`/api/post/getpostbyuserid/${id}`)
+         const res=await axios.get(`${URL}/api/post/getpostbyuserid/${id}`)
 
             if (res.data.success){
                 console.log(res.data.list)
@@ -34,7 +35,7 @@ const PostAPI = () => {
     } 
     const getPostsById=async (id)=>{
         try {
-         const res=await axios.get(`/api/post/getpostbyid/${id}`)
+         const res=await axios.get(`${URL}/api/post/getpostbyid/${id}`)
 
             if (res.data.success){
                 console.log(res.data.post)

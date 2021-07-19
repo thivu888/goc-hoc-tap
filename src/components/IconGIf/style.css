@@ -1,6 +1,7 @@
 .list-gif-feel{
     position: relative;
-    top: -143px;
+   top: -40px;
+   left: 50px;
     background-color: #fff;
     animation: animation-list-icon-gif 0.5s ease;
 }

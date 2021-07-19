@@ -18,7 +18,8 @@ import sad from '../../assets/svg/sad.svg'
 import angry from '../../assets/svg/angry.svg'
 import wow from '../../assets/svg/wow.svg'
 import haha from '../../assets/svg/haha.svg'
-const serverIO='http://localhost:5000'
+import URLSV from '../../constants'
+const serverIO=URLSV
 const News = ({item,media,view}) => {
     console.log(item)
     const socket=useRef();
@@ -37,7 +38,7 @@ const News = ({item,media,view}) => {
     const videoref=useRef()
     const history=useHistory()
     const getUser=async()=>{
-        await axios.get(`/api/user/getuserbyid/${item.userId}`).then(res=>
+        await axios.get(`${URLSV}/api/user/getuserbyid/${item.userId}`).then(res=>
          {
              setUserPost(res.data.user)
          }).catch(err=>console.log(err))
@@ -176,7 +177,7 @@ const News = ({item,media,view}) => {
                     </div>
                 </div>
                 <div className='d-flex align-items-center ' style={{height:'40px',borderBottom:'1px solid #e4e6eb'}}>
-                    <div onMouseLeave={()=>setdisplayListGifFeel(false)} onMouseOver={()=>setdisplayListGifFeel(true)} onMouseMove={()=>setdisplayListGifFeel(true)} className="qwewqe-12 hover-nut-like d-flex justify-content-center align-items-center" style={{color:'#606770',flex:'1',}} onClick={()=>likePost('')}>
+                    <div onMouseLeave={()=>setdisplayListGifFeel(false)} onMouseOver={()=>setdisplayListGifFeel(true)} onMouseMove={()=>setdisplayListGifFeel(true)} className="qwewqe-12 hover-nut-like d-flex justify-content-center align-items-center" style={{color:'#606770',flex:'1',position:'relative'}} onClick={()=>likePost('')}>
                     {isLiked.status&&isLiked.type==''||isLiked.type=='LIKE'
                         ?<>
                         <span style={{lineHeight:'100%'}}><i className='icon-like ic liked'></i></span>
@@ -241,6 +242,8 @@ const News = ({item,media,view}) => {
                         :null
                         
                     }
+                        <div style={{position:'absolute'}}><GIF likePost={likePost} displayListGifFeel={displayListGifFeel} setdisplayListGifFeel={setdisplayListGifFeel} socket={socket.current}/></div>
+
                     </div>
                     <div onClick={()=>setdisplaycmt(true)} className=" qwewqe-12 d-flex justify-content-center align-items-center" style={{color:'#606770',flex:'1'}}>
                         <span style={{lineHeight:'100%'}}><i className='icon-comment ic'></i></span>
@@ -257,7 +260,6 @@ const News = ({item,media,view}) => {
                 </div>
                 
                 <Inputcmt currentUser={currentUser} socket={socket.current} setdisplaycmt={setdisplaycmt} post={post}/>
-                <GIF likePost={likePost} displayListGifFeel={displayListGifFeel} setdisplayListGifFeel={setdisplayListGifFeel} socket={socket.current}/>
             </div>
         {/* </Viewport> */}
 

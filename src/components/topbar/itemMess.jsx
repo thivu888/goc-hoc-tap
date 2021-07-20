@@ -1,10 +1,18 @@
 import React,{useEffect,useState} from 'react';
-
+import UserAPI from '../../API/UserAPI';
 
 const ItemMess = ({item,setChatBoxShow,setUserConnect,userCurrent}) => {
-    
-    const user=item.members.find(item=>item.user_id!==userCurrent.user_id)
+    const{getUserByUserId}=UserAPI()
+    const [user,setUser]=useState(null)
     const [check,setCheck]=useState(false)
+    useEffect(async()=>{
+        const ur=item.members.find(item=>item.user_id!==userCurrent.user_id)
+        if(ur)
+        {
+        const u= await getUserByUserId(ur.user_id)
+        console.log(u)
+        setUser(u)}
+    },[item._id])
     useEffect(() => {
        const test=  item.content.length>0&&item.content[item.content.length-1].seen==false&&item.content[item.content.length-1].userSend!=userCurrent._id
        setCheck(test)

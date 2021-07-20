@@ -85,8 +85,17 @@ const UserAPI = () => {
         }
         
     }
-    ,
-    getListMess=async(id)=>{
+    const getUserByUserId=async(id)=>{
+        try {
+        const user=await axios.get(`${URL}/api/user/getuserbyuserid/${id}`);
+           if(user.data.success) return user.data.user
+        } catch (error) {
+            console.log(error)
+        }
+        
+    }
+    
+    const getListMess=async(id)=>{
         try{
             const res= await axios.get(`${URL}/api/user/getlistmess/${id}`)
             if(res.data.success){
@@ -96,8 +105,8 @@ const UserAPI = () => {
         catch(e){
             console.log(e)
         }
-    },
-    createStory=async(data)=>{
+    }
+    const createStory=async(data)=>{
         try{
             const res= await axios.post(`${URL}/api/story/create`,data,
             {
@@ -111,8 +120,8 @@ const UserAPI = () => {
         catch(e){
             console.log(e)
         }
-    },
-    getStorys=async(data)=>{
+    }
+    const getStorys=async(data)=>{
         try{
             const res= await axios.get(`${URL}/api/story`)
             if(res.data.success){
@@ -127,7 +136,7 @@ const UserAPI = () => {
 
 
 
-    return {loadUser,login,register,logout,getUserById,getListMess,createStory,getStorys};
+    return {loadUser,login,register,logout,getUserById,getListMess,createStory,getStorys,getUserByUserId};
 }
 
 export default UserAPI;

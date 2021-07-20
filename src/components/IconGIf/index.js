@@ -9,12 +9,12 @@ import './style.css'
 const index = ({displayListGifFeel,socket,setdisplayListGifFeel,likePost}) => {
     return (
         <div onMouseLeave={()=>setdisplayListGifFeel(false)} onMouseMove={()=>setdisplayListGifFeel(true)} className={displayListGifFeel?'list-gif-feel d-flex':'list-gif-feel d-none'}>
-            <img className='gif-feel' src={like} onClick={()=>likePost('LIKE')} />
-            <img className='gif-feel' src={love} onClick={()=>likePost('LOVE')}/>
-            <img className='gif-feel' src={haha} onClick={()=>likePost('HAHA')}/>
-            <img className='gif-feel' src={wow} onClick={()=>likePost('WOW')}/>
-            <img className='gif-feel' src={sad} onClick={()=>likePost('SAD')}/>
-            <img className='gif-feel' src={angry} onClick={()=>likePost('ANGRY')}/>
+            <img className='gif-feel' src={like} onClick={(event)=>{event.stopPropagation();likePost('LIKE')}} />
+            <img className='gif-feel' src={love} onClick={(event)=>{event.stopPropagation();likePost('LOVE')}}/>
+            <img className='gif-feel' src={haha} onClick={(event)=>{event.stopPropagation();likePost('HAHA')}}/>
+            <img className='gif-feel' src={wow} onClick={(event)=>{event.stopPropagation();likePost('WOW')}}/>
+            <img className='gif-feel' src={sad} onClick={(event)=>{event.stopPropagation();likePost('SAD')}}/>
+            <img className='gif-feel' src={angry} onClick={(event)=>{event.stopPropagation();likePost('ANGRY')}}/>
         </div>
     );
 }

@@ -83,3 +83,9 @@
     font-weight: 500;
     cursor: pointer;
 }
+
+@media (max-Width:768px) {
+  .loginWrapper{
+    flex-direction: column;
+  }
+}

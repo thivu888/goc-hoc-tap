@@ -30,7 +30,7 @@ const Index = ({socket,setChatBoxShow,setUserConnect}) => {
     },[listuser.length,friends.length,listuser,friends])
     console.log(listfriends)
     return (
-        <div className='rightbar col-xl-3 col-xxl-3 col-lg-3 d-flex flex-column align-items-start' style={{overflowX:'hidden'}}>
+        <div className='rightbar col-xl-3 col-xxl-3 col-lg-2 col-sm-2 col-md-2  d-flex flex-column  align-items-start' style={{overflowX:'hidden'}}>
             <div className='ml-3 d-flex' style={{width:'100%'}} >
                 <span style={{fontWeight:'600',color:'#65676b'}}>Gợi ý kết bạn</span>
             </div>

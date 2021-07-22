@@ -11,7 +11,7 @@ export default function Sidebar() {
         setMore(!more)
     }
   return (
-    <div className='col-xl-3 col-xxl-3 col-lg-3 sidebar'>
+    <div className='col-xl-3 col-xxl-3 col-lg-3 col-md-2 d-sm-none d-xs-none d-md-block  sidebar'>
         <ul>
             <li className='sidebar-item' style={{marginTop:'20px'}}>
                 <Link to={`/profile/${user.user._id}`}>

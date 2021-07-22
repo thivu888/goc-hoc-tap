@@ -17,7 +17,7 @@ const PostAPI = () => {
         console.log(data)
        await axios.post(`${URL}/api/post/delete`,data)
         .then(res=>{
-            window.location.reload()
+            getPosts()
         }).catch(er=>console.log(er))
     }
     const getPostsByIdUser=async (id)=>{

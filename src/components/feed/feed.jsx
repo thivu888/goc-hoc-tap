@@ -17,7 +17,7 @@ const Feed = ({setoverlay,socket,setShowAlertCreated,setShowAlert}) => {
 
     
     return (
-        <div className='container-fluid col-xl-6 col-xxl-6 col-lg-6 Feed'> 
+        <div className='container-fluid col-xl-6 col-xxl-6 col-lg-6 col-lg-7 col-md-6 Feed'> 
             <div className='story-container'>
                <Story/>
             </div>

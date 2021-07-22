@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React,{useState,useEffect} from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import PostAPI from '../../API/PostAPI';
 import UserAPI from '../../API/UserAPI';
@@ -13,6 +13,7 @@ import ListRequestAddFriendSent from '../../configData/ListRequestAddFriendSent'
 import ListRequestAddFriend from '../../configData/ListRequestAddFriend';
 import URLSV from '../../constants'
 const Index = ({setoverlay,socket,setShowAlertCreated,setShowAlert,setChatBoxShow,setUserConnect}) => {
+    const history=useHistory()
     const[avatarPicture,setAvatarPicture]=useState('')
     const[coverPicture,setCoverPicture]=useState('')
     const listfriends=useRecoilValue(Friends)
@@ -75,7 +76,8 @@ const Index = ({setoverlay,socket,setShowAlertCreated,setShowAlert,setChatBoxSho
         await axios.put(`${URLSV}/api/user/updateprofile`,dataupdate,{
             headers: {'content-type': 'multipart/form-data'}
         })
-        window.location.reload()
+        history.push('/temp')
+        history.goBack()
     }
     const removeFriend=()=>{
         socket.emit('remove-friend',{userRemove:user.user._id,toUser:userProfile._id,createAt:new Date(Date.now())})
